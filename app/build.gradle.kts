@@ -22,7 +22,10 @@ application {
 
 // Code Style (aesthetic...)
 spotless {
-    scala { scalafmt(libs.versions.scalafmt.version.get()).configFile(".scalafmt.conf") }
+    scala {
+        scalafmt(libs.versions.scalafmt.version.get()).configFile(".scalafmt.conf")
+        licenseHeaderFile(file("../LICENSE-HEADER"), "package ")
+    }
     // always apply formatting when building the project
     tasks.spotlessCheck.get().dependsOn(tasks.spotlessApply)
 }
