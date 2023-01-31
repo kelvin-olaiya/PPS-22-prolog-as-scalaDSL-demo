@@ -1,0 +1,8 @@
+theme: jekyll-theme-primer
+title: PPS-22-chess
+description: "Project for the course of PPS21-22: ChessGame"
+github:
+  private: false
+  license:
+    name: MIT
+  repository_url: "https://github.com/jahrim/PPS-22-chess"
