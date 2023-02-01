@@ -10,3 +10,4 @@ node_modules/*
 
 # Draw.io
 *.bkp
+*.dtmp
