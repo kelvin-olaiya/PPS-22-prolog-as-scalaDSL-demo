@@ -46,11 +46,63 @@ L'organizzazione del personale all'interno del processo Scrum prevede tre ruoli:
 Le riunioni saranno svolte periodicamente su _Microsoft Teams_, mentre l'organizzazione
 delle funzionalità del progetto sarà tenuta su _Trello_.
 
-### Strumenti
-- Strumenti di test
-- Strumenti di build
-- Strumenti di ci
+## Test-Driven Development
+Durante lo sviluppo del sistema è stato applicato il _Test-Driven Development (TDD)_, il cui scopo è quello di 
+anticipare il prima possibile la fase di testing per minimizzare i costi di manutenzione e il rischio di fallimento del 
+progetto.
+
+Il processo seguito durante il TDD è un processo iterativo chiamato _Red-Green-Refactor (RGR)_, che prevede ad ogni
+iterazione le seguenti fasi:
+1. _Red_: scrivere un test che fallisca per una certa funzionalità da implementare
+2. _Green_: scrivere il codice di produzione che soddisfi il test definito precedentemente
+3. _Refactor_: ristrutturare sia il codice di testing che quello di produzione
+
+A supporto di questo processo, sono stati adottati i seguenti strumenti:
+- _ScalaTest_: framework per la definizione di unit test per scala
+- _SCoverage_: strumento per valutare la qualità dei test come percentuale di codice di produzione analizzato
+
+## Quality Assurance
+Per il controlle della qualità del sistema sono stati adottati i seguenti strumenti:
+- _Scala Formatter_: controlla lo stile del codice scala
+- _Wart Remover_: individua possibili difetti nel codice scala
+- _Ktlint_: controlla lo stile del codice kotlin
+- _Detekt_: individua possibili difetti nel codice kotlin
+
+## Build Automation
+Per automatizzare i processi di compilazione, testing e release del codice sviluppato si è deciso di utilizzare _Gradle_
+come strumento di _Build Automation_.
+
+E' stato preferito Gradle al posto di Sbt, perchè è una tecnologia più matura e gli sviluppatori hanno più esperienza
+con tale strumento.
+
+## Continuous Integration
+Per fare in modo che il codice rimanga integro e corretto durante lo sviluppo, è stato utilizzato un workflow che
+attraverso _GitHub Actions_ permette di eseguire i test del progetto su diverse configurazioni di sistemi operativi e
+jdk utilizzati, ad ogni aggiornamento del progetto.
+
+## Continuous Delivery
+Analogamente, un altro workflow permette di automatizzare la release su _GitHub Releases_ e _Maven Central_.
+
+## Automated Evolution
+Per mantenere aggiornate le dipendenze del progetto in maniera automatica è stato utilizzato _Renovate Bot_, che osserva
+le dipendenze del progetto e in caso di necessità apre delle _pull request_ sul repository GitHub per aggiornarle. 
+
+## Versioning
+Per il versionamento del sistema è stato adottato lo standard _Semantic Versioning_, il quale prevede che una versione
+sia caratterizzata da:
+- _Major_: numero identificativo da aggiornare ad ogni cambiamento non-retrocompatibile
+- _Minor_: numero identificativo da aggiornare ad ogni aggiunta o modifica retrocompatibile di una funzionalità del 
+  sistema
+- _Patch_: numero identificatibo da aggiornare ad ogni correzione dei difetti del sistema
+
+Attraverso l'adozione dello standard _Conventional Commits_ durante lo sviluppo tramite DVCS, è stato possibile
+automatizzare l'assegnamento della versione al sistema sulla base dei commit effettuati. Per fare ciò, è stato sfruttato
+_Semantic Release Bot_ per GitHub.
+
+## Licensing
+La licenza del progetto è di tipo _MIT_. Per verificare la compatibilità tra la licenza del progetto e quelle delle sue 
+dipendenze è stato utilizzato _Fossa Bot_ per GitHub, che ad ogni aggiornamento delle dipendenze esegue tale verifica.***
 
 [Back to index](../index.md) | 
 [Previous Chapter](../1-introduction/index.md) | 
-[Next Chapter](../3-system-analysis/index.md)
+[Next Chapter](../3-requirements/index.md)

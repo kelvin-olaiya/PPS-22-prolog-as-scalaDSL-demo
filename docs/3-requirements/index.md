@@ -1,26 +1,14 @@
-# Analisi del sistema
-
-## Analisi del dominio
-<!--- TODO inserire analisi del dominio, in cui si esplicitano i concetti in maniera chiara -->
-
-Durante l'analisi del dominio, si sono dovuti esplicitare in maniera chiara alcuni concetti:
-- Turno: il periodo di tempo in cui il giocatore possiede il controllo della partita.
-- Rank: viene definito _rank_ ogni riga della scacchiera.
-- File: viene definita _file_ ogni colonna della scacchiera.
-- Mossa doppia: la mossa per cui un pedone solo dalla sua posizione iniziale effettui un movimento di 2
-  caselle, invece che soltanto una, come da regola generale.
-
-## Requisiti di sistema
+# Requisiti di sistema
 Durante l'analisi del problema sono stati individuati i seguenti requisiti del sistema da realizzare.
 
-### Business
+## Business
 - Creare un sistema in grado di poter effettuare una partita a scacchi,
   completa di tutte le regole di cui è provvisto il gioco originale.
 - Permettere di giocare le partite in modalità interattiva tra due utenti reali,
   in modalità _hotseat_.
 
 <!--- TODO discutere se mantenere i requisiti utente in questa maniera o comprimerli -->
-### Utente
+## Utente
 - Gli utenti dovranno interagire con il sistema tramite un'interfaccia grafica (GUI).
 - Gli utenti possono visualizzare i diversi fattori che rappresentano lo stato attuale della partita:
     - la disposizione delle pedine
@@ -40,7 +28,7 @@ Durante l'analisi del problema sono stati individuati i seguenti requisiti del s
     - selezionare il pezzo a cui promuovere il pedone
     - eseguire la resa
 
-### Funzionali
+## Funzionali
 - La partita deve essere avviata con una certa configurazione che comprende:
     - i tipi di giocatore (umano)
     - i vincoli temporali (senza limiti, con limite per mossa definito dall'utente)
@@ -60,8 +48,8 @@ Durante l'analisi del problema sono stati individuati i seguenti requisiti del s
     - Regina: la regina può muoversi in tutte le direzioni di N posizioni.
     - Re: il re può muoversi in tutte le direzioni di una sola posizione.
 - Sono presenti alcune eccezioni (di prima mossa) a tali regole di movimento:
-    - il pedone che si muove di 2 all'inizio (mossa doppia)
-    - l'arrocco
+    - mossa doppia: il pedone può muoversi di 2 in avanti all'inizio
+    - l'arrocco:
 - Ogni pezzo che si muove in modalità rettilinea deve fermarsi prima di un altro pezzo, nei limiti della scacchiera [DA 
   RILEGGERE].
 - Ogni pezzo può effettuare la cattura di un altro pezzo dell'avversario, muovendosi nella posizione di tale
@@ -81,18 +69,18 @@ Durante l'analisi del problema sono stati individuati i seguenti requisiti del s
     - resa
 
 <!--- TODO da rivedere i seguenti -->
-### Non funzionali
+## Non funzionali
 - Realizzazione di software in grado di essere facilmente ampliabile.
 - Realizzazione di un'interfaccia grafica che aiuti l'utente a realizzare le mosse in maniera intuitiva e rapida.
 - Realizzazione di un algoritmo di analisi delle mosse disponibili che venga effettuata in modo sufficientemente rapido.
 - Sviluppo di una notazione standard per le mosse che sia interoperabile con altri sistemi.
 
-### Di implementazione:
+## Di implementazione:
 - Utilizzo di Scala 3.x
 - Utilizzo di TuProlog
 - Utilizzo di JDK + IDE + tutti i framework)
 
-### Opzionali:
+## Opzionali:
 - Aggiunta di un'ulteriore modalità di gioco che consiste nella sfida contro un'intelligenza artificiale
 - Aggiunta di un ulteriore vincolo temporale in cui la partita ha una durata preimpostata al termine della quale ...
 - Sviluppo di una funzionalità di tracciamento dei pezzi mangiati di ciascun giocatore
