@@ -5,12 +5,14 @@ kotlin-serialization-version = "1.8.0"
 kotlinx-version = "1.5.0-RC"
 kotlin-hocon-serialization-version = "1.4.10"
 typesafe-config-version = "1.4.2"
+turtle-version = "0.8.0"
 # insert the versions of the dependencies here...
 
 [libraries]
 kotlinx = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-version" }
 kotlin-hocon-serialization = { module = "com.github.uharaqo.kotlin-hocon-mapper:kotlin-hocon-mapper", version.ref = "kotlin-hocon-serialization-version" }
 typesafe-config = { module = "com.typesafe:config", version.ref = "typesafe-config-version" }
+turtle = { module = "com.lordcodes.turtle:turtle", version.ref = "turtle-version" }
 # insert the dependencies here...
 
 [bundles]

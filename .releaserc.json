@@ -9,7 +9,7 @@
     }],
     [ "@semantic-release/github" , {
       "assets": [
-        { "path": "app/build/libs/app.jar", "label": "Executable fat JAR" }
+        { "path": "chess/build/libs/chess.jar", "label": "Executable fat JAR" }
       ]
     }]
     ]

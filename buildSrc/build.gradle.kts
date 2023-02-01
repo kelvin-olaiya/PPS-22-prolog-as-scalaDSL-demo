@@ -8,6 +8,7 @@ repositories { mavenCentral() }
 
 dependencies {
     implementation(libs.bundles.kotlin.serialization.bundle)
+    implementation(libs.turtle)
 }
 
 java { targetCompatibility = JavaVersion.VERSION_1_8 }
