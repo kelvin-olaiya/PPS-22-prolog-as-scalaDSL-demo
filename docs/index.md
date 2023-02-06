@@ -9,6 +9,8 @@
 - [Implementazione](6-implementation/index.md)
 - [Conclusioni](7-conclusion/index.md)
 
+La documentazione relativa alla metodologia di sviluppo è disponibile [qui](process/index.md).
+
 
 
 
