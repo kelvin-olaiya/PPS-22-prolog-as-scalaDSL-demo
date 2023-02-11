@@ -64,7 +64,7 @@ object ChessBoard:
         this.currentlyPlayingTeam match
           case WHITE => this.whitePieces = newTeam
           case BLACK => this.blackPieces = newTeam
-        changePlayingTeam()
+        // TODO: changePlayingTeam()
 
     private def playingTeam: Map[Position, Piece] = this.currentlyPlayingTeam match
       case WHITE => this.whitePieces
