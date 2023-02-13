@@ -9,12 +9,10 @@ package io.github.chess.adapters
 import io.vertx.core.Vertx
 
 /** Represents an adapter to help view communicate with the logic. */
-trait AbstractAdapter[Controller]:
+trait AbstractAdapter[Port]:
 
   /**
-   * Returns the controller (port) of the adapter
-   * @return the controller (port)
+   * Returns the port (controller) of the adapter
+   * @return the port (controller)
    */
-  def controller: Controller
-
-  def vertx: Vertx // TODO per noi non ha senso, eliminiamo?
+  def port: Port

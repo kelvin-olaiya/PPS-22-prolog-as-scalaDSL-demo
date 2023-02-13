@@ -7,7 +7,6 @@
 package io.github.chess.viewcontroller.fxcomponents.controllers
 
 import io.github.chess.model.{ChessBoard, Move, Piece, Position}
-import io.github.chess.util.position.PositionExtension.*
 import io.github.chess.util.stateful.StatefulSystem
 import io.github.chess.viewcontroller.fxutils.FXUtils.*
 import io.github.chess.viewcontroller.fxcomponents.controllers.template.Controller
@@ -84,7 +83,7 @@ case class ChessBoardController private (
   private def getAvailableMoves(selectedCell: CellView): Map[Position, Move] =
     this.chessBoard
       .findMoves(selectedCell.position)
-      .map(move => move.to -> move)
+      .map(position => position -> Move(selectedCell.position, position)) // TODO use ChessPort APIs
       .toMap[Position, Move]
 
   override protected def enterBehavior(state: State): Unit = state match

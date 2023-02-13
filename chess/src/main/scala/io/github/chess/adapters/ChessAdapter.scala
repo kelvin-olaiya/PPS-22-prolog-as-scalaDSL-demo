@@ -6,9 +6,8 @@
  */
 package io.github.chess.adapters
 
-import io.github.chess.controllers.ChessController
+import io.github.chess.ports.ChessPort
 import io.vertx.core.Vertx
 
 /** Helps the view communicate with the chess game. */
-class ChessAdapter(override val controller: ChessController, override val vertx: Vertx)
-    extends AbstractAdapter[ChessController]
+class ChessAdapter(override val port: ChessPort) extends AbstractAdapter[ChessPort]

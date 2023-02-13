@@ -6,8 +6,6 @@
  */
 package io.github.chess.model
 
-import io.github.chess.util.position.PositionExtension.toPosition
-
 /** Represents the particular piece of the pawn. */
 trait Pawn extends Piece
 
@@ -24,7 +22,7 @@ object Pawn:
     override def findMoves(position: Position): Set[Position] =
       List
         .iterate(0, 8)(_ + 1)
-        .flatMap { i => List.iterate(0, 8)(_ + 1).map((i, _).toPosition) }
+        .flatMap { i => List.iterate(0, 8)(_ + 1).map[Position]((i, _)) }
         .filter { _ != position }
         .toSet
       // TODO Simple set of position

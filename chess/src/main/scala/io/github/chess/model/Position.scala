@@ -52,6 +52,24 @@ trait Position:
 object Position:
 
   /**
+   * Convert this position into a pair of integer coordinates, considering
+   * the top-left corner of the chess board as (0,0) and the bottom-right
+   * corner of the chess board as (7,7).
+   *
+   * @return a pair of integer coordinates representing this position in
+   *         the chess board
+   */
+  given Conversion[Position, (Int, Int)] = position =>
+    (Rank.values.length - position.rank.ordinal - 1, position.file.ordinal)
+
+  /** Reverse of [[Position.toIntPair]]. */
+  given Conversion[(Int, Int), Position] = chessCoords =>
+    Position(
+      File.fromOrdinal(chessCoords._1),
+      Rank.fromOrdinal(Rank.values.length - chessCoords._2 - 1)
+    )
+
+  /**
    * Creates a position, using its file and its rank.
    * @param file [[File]] of the position
    * @param rank [[Rank]] of the position

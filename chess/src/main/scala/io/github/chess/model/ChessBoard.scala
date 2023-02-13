@@ -20,11 +20,11 @@ trait ChessBoard:
   def pieces: Map[Position, Piece]
 
   /**
-   * Gives all the available moves for a pieces placed in a specified position.
+   * Gives all the available positions for a pieces placed in a specified position.
    * @param position the [[Position]] where the piece to be moved is placed
-   * @return all the available moves that could be performed by the piece
+   * @return all the available positions that could be performed by the piece
    */
-  def findMoves(position: Position): Set[Move]
+  def findMoves(position: Position): Set[Position]
 
   /**
    * Performs the move by a piece on the board.
@@ -51,11 +51,11 @@ object ChessBoard:
 
     override def pieces: Map[Position, Piece] = this.whitePieces ++ this.blackPieces
 
-    override def findMoves(position: Position): Set[Move] =
+    override def findMoves(position: Position): Set[Position] =
       val team = playingTeam
       val selectedPiece = team.get(position)
       selectedPiece match
-        case Some(piece) => piece.findMoves(position).map(dest => Move(position, dest))
+        case Some(piece) => piece.findMoves(position)
         case None        => Set.empty
 
     override def move(move: Move): Unit =
