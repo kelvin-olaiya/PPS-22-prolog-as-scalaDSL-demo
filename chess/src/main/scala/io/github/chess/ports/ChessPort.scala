@@ -49,8 +49,6 @@ object ChessPort:
 
   private case class ChessPortImpl(private val vertx: Vertx) extends ChessPort:
 
-    import Move.given
-
     private val chessBoard = ChessBoard(vertx)
 
     override def findMoves(position: Position): Set[Position] = chessBoard.findMoves(position)

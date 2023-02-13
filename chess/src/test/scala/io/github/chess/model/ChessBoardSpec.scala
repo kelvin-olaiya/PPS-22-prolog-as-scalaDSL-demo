@@ -22,7 +22,7 @@ class ChessBoardSpec extends AbstractSpec:
   }
 
   it should "let you move its pawn from a2 to a3" in {
-    chessBoard.findMoves(pawnInitialPosition) should contain(firstMove)
+    chessBoard.findMoves(pawnInitialPosition) should contain(pawnNextPosition)
   }
 
   it should "see the new position of the pawn, after its move" in {
