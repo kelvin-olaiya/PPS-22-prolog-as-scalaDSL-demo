@@ -1,0 +1,9 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>mirko-felice/renovate-config"
+  ],
+  "reviewersSampleSize": 2,
+  "reviewers": ["mirko-felice", "maxim-derevyanchenko", "jahrim", "madina9229"],
+  "assignees": []
+}
