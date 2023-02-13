@@ -116,17 +116,11 @@ val publicationName = "ChessGame"
 
 publishing {
     publications {
-        val baseVersion = project.version.toString()
-        val projectVersion =
-            if (baseVersion.contains("-"))
-                baseVersion.substringBefore("-") + "-SNAPSHOT"
-            else
-                baseVersion
         create<MavenPublication>(publicationName) {
             artifact(tasks.jar)
             artifact(scaladocJar)
             artifact(sourceJar)
-            version = projectVersion
+            version = project.version.toString()
             pom {
                 groupId = "io.github.jahrim.chess"
                 name.set("$groupId:$artifactId")
@@ -171,8 +165,7 @@ publishing {
         repositories {
             maven {
                 val releasesUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                val snapshotsUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-                url = uri(if (projectVersion.endsWith("SNAPSHOT")) snapshotsUrl else releasesUrl)
+                url = uri(releasesUrl)
                 credentials {
                     val mavenUsername: String? by project
                     username = mavenUsername
