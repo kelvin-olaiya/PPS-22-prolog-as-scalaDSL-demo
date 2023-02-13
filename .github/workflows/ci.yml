@@ -12,7 +12,7 @@ on:
   pull_request:
 
 jobs:
-  Build:
+  Test:
     strategy:
       fail-fast: false
       matrix:

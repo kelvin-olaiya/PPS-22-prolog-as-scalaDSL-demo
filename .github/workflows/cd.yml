@@ -29,7 +29,7 @@ jobs:
       - name: Create Jar
         uses: gradle/gradle-build-action@v2.3.3
         with:
-          arguments: build
+          arguments: fatJar
       - name: Publish Release To Github
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
