@@ -16,6 +16,7 @@ import io.github.chess.viewcontroller.fxcomponents.pages.components.CellView.{
 }
 import io.github.chess.viewcontroller.fxutils.FXUtils
 import io.github.chess.viewcontroller.fxutils.FXUtils.*
+import io.github.chess.viewcontroller.fxutils.FXUtils.given
 import javafx.scene.layout.Pane
 import scalafx.Includes.*
 import scalafx.scene.image.ImageView
@@ -32,7 +33,7 @@ case class CellView(cell: GridCell[Pane]):
   private var layers: Map[Layer, ImageView] = Map()
 
   /** @return the position of this cell in the chess board. */
-  def position: Position = (cell.x, Rank.values.length - 1 - cell.y) // TODO refactor?
+  def position: Position = (cell.x, cell.y)
 
   /**
    * Add the specified piece to the content of this cell.
