@@ -56,12 +56,9 @@ Durante l'analisi del problema sono stati individuati i seguenti requisiti del s
   pezzo, causando la rimozione dalla scacchiera.
 - Sono presenti alcune eccezioni alle regole di cattura:
     - Il pedone effettua la cattura sempre e solo, muovendosi di una posizione in avanti in diagonale.
-    - Il pedone, nel caso in cui un pedone avversario effettui la _mossa doppia_ e si ritrovi affianco al
-      pedone in questione, esso può catturare il pedone avversario posizionandosi nella casella dietro di lui.
-      Tale mossa viene definita _presa al varco_.
-- Quando un pedone avversario, effettuando la _mossa doppia_ finisce esattamente accanto, ovvero sulla stessa traversa
-  e su colonna adiacente, al pedone del giocatore del turno successivo, quest'ultimo in tale turno può catturarlo come
-  se il pedone avversario si fosse mosso di un passo solo. Tale mossa viene definita _en passant_.
+    - Quando un pedone avversario, effettuando la _mossa doppia_ finisce esattamente accanto, ovvero sulla stessa traversa
+      e su colonna adiacente, al pedone del giocatore del turno successivo, quest'ultimo in tale turno può catturarlo 
+      come se il pedone avversario si fosse mosso di un passo solo. Tale mossa viene definita _en passant_.
 - Il sistema deve essere in grado di riconoscere particolari stati del gioco:
     - scacco
     - scacco matto

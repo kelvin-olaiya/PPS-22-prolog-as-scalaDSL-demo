@@ -4,7 +4,9 @@
  *
  * Full license description available at: https://github.com/jahrim/PPS-22-chess/blob/master/LICENSE
  */
-package io.github.chess.model
+package io.github.chess.model.moves
+
+import io.github.chess.model.Position
 
 /** Represents the moving from a [[Position]] to another [[Position]]. */
 trait Move:
@@ -32,4 +34,6 @@ object Move:
    */
   def apply(from: Position, to: Position): Move = SimpleMove(from, to)
 
-  private case class SimpleMove(override val from: Position, override val to: Position) extends Move
+  private case class SimpleMove(override val from: Position, override val to: Position)
+      extends Move:
+    override def toString: String = s"${this.from}${this.to}"

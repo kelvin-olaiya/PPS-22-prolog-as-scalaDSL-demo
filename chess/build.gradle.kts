@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.vertx)
     implementation(libs.scalafx)
     libs.bundles.javafx.get().forEach { implementation("${it.module}:${it.version}:${JavaFX.getClassifier()}") }
+    implementation(libs.tuprolog)
     testImplementation(libs.scalatest)
     scalaCompilerPlugins(libs.wartremover)
 }
@@ -34,12 +35,13 @@ application {
 
 // Code Style (aesthetic...)
 spotless {
+    isEnforceCheck = false
     scala {
         scalafmt(libs.versions.scalafmt.version.get()).configFile(".scalafmt.conf")
         licenseHeaderFile(file("../LICENSE-HEADER"), "package ")
     }
-    // always apply formatting when building the project
-    tasks.spotlessCheck.get().dependsOn(tasks.spotlessApply)
+    // always apply formatting before building, running or testing the project
+    tasks.compileScala.get().dependsOn(tasks.spotlessApply)
 }
 
 // Code Linting (error prevention...)
@@ -47,9 +49,26 @@ val wartRemoverCompileOptions = WartRemover.configFile(file(".wartremover.conf")
 
 // Scala Compiler Options
 tasks.withType(ScalaCompile::class.java) {
-    scalaCompileOptions.additionalParameters = listOf("-Xtarget:8", "-indent", "-rewrite") + wartRemoverCompileOptions
+    scalaCompileOptions.additionalParameters =
+        listOf(
+            "-Xtarget:8",
+            "-indent",
+            "-rewrite",
+            "-feature",
+            "-language:implicitConversions"
+        ) + wartRemoverCompileOptions
 }
 
+// Scala Test
+val scalaTest by tasks.registering(JavaExec::class) {
+    dependsOn(tasks.testClasses)
+    mainClass.set("org.scalatest.tools.Runner")
+    args("-R", "build/classes/scala/test build/classes/java/test", "-o")
+    classpath(sourceSets["test"].runtimeClasspath)
+}
+tasks.test.get().dependsOn(scalaTest)
+
+// Publication
 val scaladocJar by tasks.registering(Jar::class) {
     dependsOn(tasks.scaladoc)
     archiveClassifier.set("javadoc")
