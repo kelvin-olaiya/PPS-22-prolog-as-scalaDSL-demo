@@ -17,6 +17,7 @@ object InterfaceConfiguration:
     val LightBrownCell: Color = Color.web("#F9D19D")
     val DarkBrownCell: Color = Color.web("#D18C47")
     val SelectedCell: Color = Color.web("#D5E8D4")
+    val CapturingCell: Color = Color.web("#F5372A")
 
   /** Images of the ChessGame interface. */
   object Images:
@@ -37,3 +38,5 @@ object InterfaceConfiguration:
       val AvailableMove: Image = Image("/images/effects/available-move.png")
     object Icons:
       val GameIcon: Image = Image("/images/icons/game-icon.png")
+    object Utility:
+      val ImageNotFound: Image = Image("/images/utility/image-not-found.png")

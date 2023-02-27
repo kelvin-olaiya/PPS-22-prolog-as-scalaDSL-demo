@@ -16,7 +16,7 @@ import scala.annotation.targetName
 
 /** Builder of a chess board. */
 class ChessBoardBuilder:
-  private val chessBoard: ChessBoard = ChessBoard.empty
+  private var chessBoard: ChessBoard = ChessBoard.empty
   private var indexOfNextCell = ChessBoardBuilder.MinIndex
 
   /**
@@ -33,7 +33,7 @@ class ChessBoardBuilder:
       this.indexOfNextCell <= ChessBoardBuilder.MaxIndex,
       s"Tried to set the ${this.indexOfNextCell + 1}th position out of ${ChessBoard.NumberOfPositions} positions. "
     )
-    this.chessBoard.update(this.nextPosition -> piece)
+    this.chessBoard = this.chessBoard.update(this.nextPosition -> piece)
     this.indexOfNextCell += 1
     this
 
@@ -88,6 +88,9 @@ object ChessBoardBuilder:
 
   /** A DSL definition for a [[ChessBoardBuilder]]. */
   object DSL:
+    /** A white piece placeholder. */
+    def X(using b: ChessBoardBuilder): ChessBoardBuilder = b + Piece(Team.WHITE)
+
     /** A white pawn. */
     def P(using b: ChessBoardBuilder): ChessBoardBuilder = b + Pawn(Team.WHITE)
 
@@ -105,6 +108,9 @@ object ChessBoardBuilder:
 
     /** A white king. */
     def K(using b: ChessBoardBuilder): ChessBoardBuilder = b + King(Team.WHITE)
+
+    /** A black piece placeholder. */
+    def x(using b: ChessBoardBuilder): ChessBoardBuilder = b + Piece(Team.BLACK)
 
     /** A black pawn. */
     def p(using b: ChessBoardBuilder): ChessBoardBuilder = b + Pawn(Team.BLACK)

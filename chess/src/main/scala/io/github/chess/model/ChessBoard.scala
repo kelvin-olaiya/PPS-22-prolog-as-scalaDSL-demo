@@ -6,11 +6,11 @@
  */
 package io.github.chess.model
 
-import io.github.chess.events.EndTurnEvent
+import io.github.chess.events.PieceMovedEvent
 import io.github.chess.model.ChessBoardBuilder.DSL.*
 import io.github.chess.model.Team.{BLACK, WHITE}
 import io.github.chess.model.moves.Move
-import io.github.chess.model.pieces.{Pawn, Piece}
+import io.github.chess.model.pieces.{Bishop, King, Knight, Pawn, Piece, Queen, Rook}
 import io.vertx.core.Vertx
 
 /** The trait representing the concept of a Chess Board. */
@@ -22,36 +22,32 @@ trait ChessBoard:
   def pieces: Map[Position, Piece]
 
   /**
-   * Gives access to all the white [[Piece]]s that are present on the board.
-   *
-   * @return the map containing only white [[Piece]]s of the board
+   * Gives access to all the [[Piece]]s of the specified team that are present on the board.
+   * @param team the specified team
+   * @return the map containing only the [[Piece]]s of the board of the specified team
    */
-  def whitePieces: Map[Position, Piece] = pieces.filter(_._2.team == Team.WHITE)
-
-  /**
-   * Gives access to all the black [[Piece]]s that are present on the board.
-   *
-   * @return the map containing only black [[Piece]]s of the board
-   */
-  def blackPieces: Map[Position, Piece] = pieces.filter(_._2.team == Team.BLACK)
+  def pieces(team: Team): Map[Position, Piece] = pieces.filter(_._2.team == team)
 
   /**
    * Updates the chess board assigning the specified piece to the specified position.
    * @param position the specified position
    * @param piece the specified piece
+   * @return a new updated chess board
    */
-  def setPiece(position: Position, piece: Piece): Unit
+  def setPiece(position: Position, piece: Piece): ChessBoard
 
   /**
    * Updates the chess board removing the piece at the specified position.
    * @param position the specified position
+   * @return a new updated chess board
    */
-  def removePiece(position: Position): Unit
+  def removePiece(position: Position): ChessBoard
 
   /**
    * Updates the chess board applying the specified updates.
    * @param updates a list of updates, each mapping a certain position to a new piece,
    *                or an empty optional if the piece has to be removed from that position
+   * @return a new updated chess board
    * @example
    * {{{
    *   chessBoard.update(
@@ -61,23 +57,23 @@ trait ChessBoard:
    *   )
    * }}}
    */
-  def update(updates: (Position, Option[Piece])*): Unit =
-    updates.foreach {
-      case (position, Some(piece)) => setPiece(position, piece)
-      case (position, _)           => removePiece(position)
+  def update(updates: (Position, Option[Piece])*): ChessBoard =
+    updates.foldLeft(this) {
+      case (chessBoard, (position, Some(piece))) => chessBoard.setPiece(position, piece)
+      case (chessBoard, (position, _))           => chessBoard.removePiece(position)
     }
 
   /**
    * Moves a piece if present in from position to a target position.
    * @param from starting [[Position]]
    * @param to target [[Position]]
+   * @return a new updated chess board
    */
-  def movePiece(from: Position, to: Position): Unit =
+  def movePiece(from: Position, to: Position): ChessBoard =
     this.pieces.get(from) match
       case Some(value) =>
-        removePiece(from)
-        setPiece(to, value)
-      case None =>
+        this.removePiece(from).setPiece(to, value)
+      case None => this
 
 /** Companion object of [[ChessBoard]]. */
 object ChessBoard:
@@ -92,8 +88,8 @@ object ChessBoard:
   /** All the possible positions in the chess board. */
   lazy val Positions: Iterable[Position] =
     for
-      i <- 0 until ChessBoard.Size
       j <- 0 until ChessBoard.Size
+      i <- 0 until ChessBoard.Size
     yield (i, j)
 
   /** Alias for [[ChessBoard.empty]]. */
@@ -128,9 +124,34 @@ object ChessBoard:
   def fromMap(pieces: Map[Position, Piece]): ChessBoard = BasicChessBoard(pieces)
 
   /** Basic implementation of a chess board. */
-  private case class BasicChessBoard(private var _pieces: Map[Position, Piece] = Map.empty)
+  private case class BasicChessBoard(private val _pieces: Map[Position, Piece] = Map.empty)
       extends ChessBoard:
     override def pieces: Map[Position, Piece] = this._pieces
-    override def setPiece(position: Position, piece: Piece): Unit =
-      this._pieces += position -> piece
-    override def removePiece(position: Position): Unit = this._pieces -= position
+
+    override def setPiece(position: Position, piece: Piece): ChessBoard =
+      BasicChessBoard(this._pieces + (position -> piece))
+
+    override def removePiece(position: Position): ChessBoard =
+      BasicChessBoard(this._pieces - position)
+
+    override def toString: String =
+      ChessBoard.Positions
+        .map(this.pieces.get(_))
+        .map(_.map(pieceToString).getOrElse("*"))
+        .grouped(ChessBoard.Size)
+        .toList
+        .reverse
+        .map(line => line.mkString(" | "))
+        .mkString("\n", "\n", "\n")
+
+    private def pieceToString(piece: Piece): String =
+      val unboundRepresentation: (String, String) =
+        piece match
+          case _: King   => ("K", "k")
+          case _: Queen  => ("Q", "q")
+          case _: Rook   => ("R", "r")
+          case _: Bishop => ("B", "b")
+          case _: Knight => ("N", "n")
+          case _: Pawn   => ("P", "p")
+          case _         => ("X", "x")
+      if piece.team == Team.WHITE then unboundRepresentation._1 else unboundRepresentation._2

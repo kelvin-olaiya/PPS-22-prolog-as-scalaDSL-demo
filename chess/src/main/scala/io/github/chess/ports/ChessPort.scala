@@ -7,23 +7,27 @@
 package io.github.chess.ports
 
 import io.github.chess.events.Event
+import io.github.chess.model.configuration.{GameConfiguration, Player}
 import io.github.chess.model.moves.Move
-import io.github.chess.model.{ChessGameStatus, Position}
+import io.github.chess.model.pieces.Piece
+import io.github.chess.model.{ChessGameStatus, Position, PromotionPiece}
 import io.vertx.core.eventbus.Message
-import io.vertx.core.{Future, Handler}
+import io.vertx.core.Handler
+
+import scala.concurrent.Future
+import scala.reflect.ClassTag
 
 /** Represents the contract of a chess engine service. */
 trait ChessPort:
-
-  // TODO inserire gameConfiguration parameter e pensare a cosa ritornare
-  // (discutere se la view crea subito il modello e cambia la gameConfiguration con i vari input dell'utente)
-  // def createGame(gc: GameConfiguration): ChessGameStatus
-
-  // TODO inserire player parameter
-  // def surrender(p: Player): Unit = ???
-
   /** @return a future containing the state of the game of chess */
   def getState: Future[ChessGameStatus]
+
+  /**
+   * Starts the game, using from its [[GameConfiguration]].
+   * @param gameConfiguration its [[GameConfiguration]]
+   * @return a future completed when the game is started
+   */
+  def startGame(gameConfiguration: GameConfiguration): Future[Unit]
 
   /**
    * @param position the specified position
@@ -39,12 +43,30 @@ trait ChessPort:
    */
   def applyMove(move: Move): Future[Unit]
 
-  // TODO: reason about changing it to subscribe[T <: Event](handler: (Event) => Unit)
+  /**
+   * Promotes a pawn to another piece.
+   * @param pawnPosition position of the pawn to promote
+   * @param promotingPiece piece to promote the pawn
+   * @return a future that completes when the promotion has been applied
+   */
+  // TODO refactor to return piece, so not repainting all board but single cell
+  def promote[P <: Piece](pawnPosition: Position, promotingPiece: PromotionPiece[P]): Future[Unit]
+
+  /**
+   * Make the specified player surrender.
+   * @param p the specified player
+   * @return a future that completes when the player has effectively surrendered.
+   */
+  def surrender(p: Player): Future[Unit]
+
   /**
    * Subscribes an handler to a particular event.
-   * @param address address to subscribe on
-   * @param handler [[Handler]] to inform when the event is published
+   * @param handler a consumer for the specified event
    * @tparam T type parameter of the event extending superclass [[Event]]
    * @return a future that completes when the subscription has been registered
    */
-  def subscribe[T <: Event](address: String, handler: Handler[Message[T]]): Future[Unit]
+  def subscribe[T <: Event: ClassTag](handler: T => Unit): Future[Unit]
+
+  // todo allow unsubscribe to events
+  // def subscribe[T <: Event: ClassTag](handler: T => Unit): Future[Subscription]
+  // def unsubscribe(subscription: Subscription): Future[Unit]

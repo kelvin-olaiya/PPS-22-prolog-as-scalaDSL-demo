@@ -6,19 +6,14 @@
  */
 package io.github.chess.model.rules.chess.bishop
 
-import io.github.chess.model.moves.Move
-import io.github.chess.model.rules.chess.{ChessRule, DirectionalRule}
-import io.github.chess.model.rules.prolog.{NEPrologRule, NWPrologRule, SouthEastRule, SouthWestRule}
-import io.github.chess.model.{ChessGameStatus, Position, moves}
+import io.github.chess.model.rules.chess.DirectionalRule
+import io.github.chess.model.rules.prolog.{NEPrologRule, NWPrologRule, SEPrologRule, SWPrologRule}
+import DiagonalRule.*
 
 /** Represents the chess rule that can find all the moves in diagonal directions, analyzing the status. */
-class DiagonalRule extends ChessRule with DirectionalRule:
+class DiagonalRule extends DirectionalRule:
+  override def directions: Set[Direction] = rules.map(prologRuleToDirection)
 
-  private val northWestRule = NWPrologRule()
-  private val northEastRule = NEPrologRule()
-  private val southWestRule = SouthWestRule()
-  private val southEastRule = SouthEastRule()
-  private val rules = Set(northWestRule, northEastRule, southEastRule, southWestRule)
-
-  override def findMoves(position: Position, status: ChessGameStatus): Set[Move] =
-    this.rules.flatMap { analyseDirection(position, status, _) }
+/** Companion object of [[DiagonalRule]]. */
+object DiagonalRule:
+  private val rules = Set(NEPrologRule(), SEPrologRule(), SWPrologRule(), NWPrologRule())

@@ -6,13 +6,15 @@
  */
 package io.github.chess.events
 
+import scala.reflect.{ClassTag, classTag}
+
 /** Represents every event happened in the model. */
-trait Event:
+trait Event
 
-  private final val EventStartAddress = "events/"
-
-  /** Specific address to override to make event address unique. */
-  protected val specificAddress: String
-
-  /** Unique event address to communicate through. */
-  final def address: String = EventStartAddress + specificAddress
+/** Companion object of [[Event]]. */
+object Event:
+  /**
+   * @tparam T the specified type of events
+   * @return the address of the specified type of events
+   */
+  def addressOf[T <: Event: ClassTag]: String = classTag[T].runtimeClass.getSimpleName

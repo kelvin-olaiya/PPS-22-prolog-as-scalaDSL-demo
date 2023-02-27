@@ -6,14 +6,7 @@
  */
 package io.github.chess.model.rules.chess.bishop
 
-import io.github.chess.model.moves.Move
-import io.github.chess.model.{ChessGameStatus, Position}
-import io.github.chess.model.rules.chess.ChessRule
+import io.github.chess.model.rules.chess.{AvoidAlliesRule, AvoidSelfCheckRule}
 
 /** Represent the movement rule for the [[Bishop]]. */
-class BishopRule extends ChessRule:
-
-  private val diagonalRule = DiagonalRule()
-
-  override def findMoves(position: Position, status: ChessGameStatus): Set[Move] =
-    diagonalRule.findMoves(position, status)
+class BishopRule extends DiagonalRule with AvoidAlliesRule with AvoidSelfCheckRule

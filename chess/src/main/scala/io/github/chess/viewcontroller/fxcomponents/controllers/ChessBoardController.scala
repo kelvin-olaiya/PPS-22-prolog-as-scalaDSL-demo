@@ -6,7 +6,7 @@
  */
 package io.github.chess.viewcontroller.fxcomponents.controllers
 
-import io.github.chess.model.moves.Move
+import io.github.chess.model.moves.{CaptureMove, CastlingMove, DoubleMove, Move}
 import io.github.chess.model.pieces.Piece
 import io.github.chess.model.{ChessBoard, Position, moves}
 import io.github.chess.util.stateful.StatefulSystem
@@ -16,13 +16,15 @@ import io.github.chess.viewcontroller.fxcomponents.controllers.template.Controll
 import io.github.chess.viewcontroller.fxcomponents.controllers.ChessBoardController.State
 import io.github.chess.viewcontroller.fxcomponents.controllers.ChessBoardController.State.*
 import io.github.chess.viewcontroller.fxcomponents.pages.components.{CellView, PieceView}
-import io.vertx.core.Future
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
 import scalafx.Includes.*
 import scalafx.application.Platform
 import scalafx.stage.Stage
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Success, Failure}
 
 /**
  * Controller of the chess board view.
@@ -38,12 +40,16 @@ case class ChessBoardController private (
     with ChessApplicationComponent:
   private var chessBoardBelief: Map[Position, Piece] = Map.empty
   this.cells.values.foreach(cell => cell.setOnMouseClicked { onCellClicked(_, cell) })
-  repaint()
 
+  // TODO Given that GamePageController must retrieve all data from the model,
+  //  it might be that this method could be removed.
+  //  In alternative it can be made that ChessGameController is in charge of retrieving all the pieces from the board,
+  //  this would mean that it could be better to merge the two methods instead.
   /** Retrieves the state of the chess engine service and shows it. */
   def repaint(): Unit =
-    this.context.chessEngineProxy.getState.onSuccess { state =>
-      this.repaint(state.chessBoard.pieces)
+    this.context.chessEngineProxy.getState.onComplete {
+      case Success(state)     => this.repaint(state.chessBoard.pieces)
+      case Failure(exception) => throw exception
     }
 
   /**
@@ -74,15 +80,22 @@ case class ChessBoardController private (
    */
   private def onCellClicked(event: MouseEvent, clickedCell: CellView): Unit =
     this.getState match
-      case NoneSelected => this.selectCell(clickedCell)
+      case NoneSelected =>
+        this.context.chessEngineProxy.getState.onComplete {
+          case Success(value) =>
+            this.chessBoardBelief.get(clickedCell.position) match
+              case Some(piece) if piece.team == value.currentTurn =>
+                Platform.runLater { this.selectCell(clickedCell) }
+              case _ =>
+          case _ =>
+        }
       case PieceSelected(selectedCell, availableMoves) =>
         availableMoves.get(clickedCell.position) match
           case Some(selectedMove) =>
             this.context.chessEngineProxy.applyMove(selectedMove)
             enter(NoneSelected)
-          case None => this.selectCell(clickedCell)
-    // TODO: temporary. Repaint will be called in the subscription to the state changes
-    repaint()
+          case None if clickedCell.position == selectedCell.position => enter(NoneSelected)
+          case _                                                     => this.selectCell(clickedCell)
 
   /**
    * Select the specified cell, checking if any piece was selected.
@@ -91,8 +104,10 @@ case class ChessBoardController private (
   private def selectCell(cell: CellView): Unit =
     this.chessBoardBelief.get(cell.position).map(_ => cell) match
       case Some(selectedCell) =>
-        getAvailableMoves(selectedCell).onSuccess { availableMoves =>
-          enter(PieceSelected(selectedCell, availableMoves))
+        getAvailableMoves(selectedCell).onComplete {
+          case Success(availableMoves) =>
+            Platform.runLater { enter(PieceSelected(selectedCell, availableMoves)) }
+          case Failure(exception) => throw exception
         }
       case None =>
         enter(NoneSelected)
@@ -110,13 +125,21 @@ case class ChessBoardController private (
     case NoneSelected =>
     case PieceSelected(selectedCell, availableMoves) =>
       selectedCell.emphasize()
-      availableMoves.keys.foreach { this.cells.get(_).foreach(_.setMoveAvailableEffect()) }
+      availableMoves.foreach((position, move) =>
+        move match
+          case _: CaptureMove => this.cells.get(position).foreach(_.emphasizeCapture())
+          case _              => this.cells.get(position).foreach(_.setMoveAvailableEffect())
+      )
 
   override protected def exitBehavior(state: State): Unit = state match
     case NoneSelected =>
     case PieceSelected(selectedCell, availableMoves) =>
       selectedCell.deemphasize()
-      availableMoves.keys.foreach { this.cells.get(_).foreach(_.removeMoveAvailableEffect()) }
+      availableMoves.foreach((position, move) =>
+        move match
+          case _: CaptureMove => this.cells.get(position).foreach(_.deemphasize())
+          case _              => this.cells.get(position).foreach(_.removeMoveAvailableEffect())
+      )
 
 /** Companion object of [[ChessBoardController]]. */
 object ChessBoardController:

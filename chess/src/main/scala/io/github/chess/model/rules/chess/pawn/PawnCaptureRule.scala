@@ -8,5 +8,5 @@ package io.github.chess.model.rules.chess.pawn
 
 import io.github.chess.model.rules.chess.BaseCaptureRule
 
-/** The rule that analyzes Pawn specific capture rules to say if it can perform them or not. */
+/** The rule that analyzes Pawn base capture rule to say if it can perform it or not. */
 class PawnCaptureRule extends PawnCaptureMoves with BaseCaptureRule

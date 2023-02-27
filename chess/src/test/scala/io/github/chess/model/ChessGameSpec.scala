@@ -7,8 +7,35 @@
 package io.github.chess.model
 
 import io.github.chess.AbstractSpec
+import io.github.chess.model.configuration.GameConfiguration
+import io.github.chess.model.moves.Move
+import io.vertx.core.Vertx
+import scala.concurrent.Await
+import scala.concurrent.duration.{Duration, SECONDS}
 
-class ChessGameSpec extends AbstractSpec
+class ChessGameSpec extends AbstractSpec:
+
+  val blackPawnPosition: Position = (0, 6)
+  val whitePawnPosition: Position = (0, 1)
+  val whitePawnMove: Move = Move(whitePawnPosition, (0, 3))
+  val chessGame: ChessGame = ChessGame(Vertx.vertx())
+  val maxDuration: Duration = Duration(5, SECONDS)
+  Await.result(chessGame.startGame(GameConfiguration.default), maxDuration)
+
+  "The Chess Game" should "let the white player move a pawn of their team in the beginning of a standard game" in {
+    Await.result(chessGame.getState, maxDuration).currentTurn should be(Team.WHITE)
+    Await.result(chessGame.findMoves(whitePawnPosition), maxDuration) shouldNot be(empty)
+  }
+
+  it should "forbid the initial player from moving a pawn of the black team" in {
+    Await.result(chessGame.findMoves(blackPawnPosition), maxDuration) should be(empty)
+  }
+
+  it should "change the turn after a move" in {
+    Await.result(chessGame.applyMove(whitePawnMove), maxDuration)
+    Await.result(chessGame.getState, maxDuration).currentTurn should be(Team.BLACK)
+    Await.result(chessGame.findMoves(blackPawnPosition), maxDuration) shouldNot be(empty)
+  }
 
 /* TODO consider these tests
  "The chess board" should "initially have a piece in the position a2" in {

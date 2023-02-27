@@ -11,6 +11,9 @@ import io.github.chess.model.Team
 import io.github.chess.model.rules.chess.bishop.BishopRule
 
 /** Represents the particular piece of the bishop. */
-case class Bishop(override val team: Team) extends Piece(team):
+case class Bishop(override val team: Team) extends Piece:
+  override def rule: ChessRule = Bishop.bishopRule
 
-  override val rule: ChessRule = BishopRule()
+/** Object for Bishop that creates and stores a single [[BishopRule]] that all other Bishops will use. */
+object Bishop:
+  private final val bishopRule = BishopRule()

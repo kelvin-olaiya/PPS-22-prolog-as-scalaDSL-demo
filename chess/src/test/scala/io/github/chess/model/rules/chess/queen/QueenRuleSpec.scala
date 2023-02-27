@@ -6,16 +6,13 @@
  */
 package io.github.chess.model.rules.chess.queen
 
-import io.github.chess.AbstractSpec
-import io.github.chess.model.pieces.{Piece, Queen}
-import io.github.chess.model.rules.chess.queen.QueenRule
+import io.github.chess.model.rules.AbstractChessRuleSpec
+import io.github.chess.model.pieces.Queen
 import io.github.chess.model.ChessBoard.*
-import io.github.chess.model.{ChessBoard, ChessGameStatus, File, Position, Rank, Team}
-import io.github.chess.util.debug.Logger
+import io.github.chess.model.{ChessBoard, ChessGameStatus, File, Position, Rank}
 
 /** Test suite for [[Queen]]. */
-class QueenRuleSpec extends AbstractSpec:
-  val queenRule: QueenRule = QueenRule()
+class QueenRuleSpec extends AbstractChessRuleSpec:
   val queenPosition: Position = Position(File.E, Rank._5)
 
   "The queen" should "move in all possible directions" in {
@@ -29,15 +26,15 @@ class QueenRuleSpec extends AbstractSpec:
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
     })
-    this.getChessBoardFromMoves(chessGameStatus) shouldEqual ChessBoard {
-      * | Q | * | * | Q | * | * | Q
-      * | * | Q | * | Q | * | Q | *
-      * | * | * | Q | Q | Q | * | *
-      Q | Q | Q | Q | * | Q | Q | Q
-      * | * | * | Q | Q | Q | * | *
-      * | * | Q | * | Q | * | Q | *
-      * | Q | * | * | Q | * | * | Q
-      Q | * | * | * | Q | * | * | *
+    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard {
+      * | X | * | * | X | * | * | X
+      * | * | X | * | X | * | X | *
+      * | * | * | X | X | X | * | *
+      X | X | X | X | * | X | X | X
+      * | * | * | X | X | X | * | *
+      * | * | X | * | X | * | X | *
+      * | X | * | * | X | * | * | X
+      X | * | * | * | X | * | * | *
     }
   }
 
@@ -52,14 +49,14 @@ class QueenRuleSpec extends AbstractSpec:
       * | * | * | * | R | * | * | *
       * | * | * | * | * | * | * | *
     })
-    this.getChessBoardFromMoves(chessGameStatus) shouldEqual ChessBoard {
-      * | * | * | * | Q | * | * | *
-      * | * | * | * | Q | * | * | *
-      * | * | * | Q | Q | * | * | *
-      * | * | Q | Q | * | Q | Q | Q
-      * | * | * | * | Q | Q | * | *
-      * | * | * | * | Q | * | Q | *
-      * | * | * | * | * | * | * | Q
+    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard {
+      * | * | * | * | X | * | * | *
+      * | * | * | * | X | * | * | *
+      * | * | * | X | X | * | * | *
+      * | * | X | X | * | X | X | X
+      * | * | * | * | X | X | * | *
+      * | * | * | * | X | * | X | *
+      * | * | * | * | * | * | * | X
       * | * | * | * | * | * | * | *
     }
   }
@@ -67,7 +64,7 @@ class QueenRuleSpec extends AbstractSpec:
   it should "be able to capture pieces of the opposite team" in {
     val chessGameStatus: ChessGameStatus = ChessGameStatus(ChessBoard {
       * | p | * | * | * | * | * | *
-      * | * | * | * | p | * | * | *
+      * | * | p | * | p | * | * | *
       * | * | * | * | * | * | * | *
       * | * | K | * | Q | p | * | *
       * | * | * | * | * | * | * | *
@@ -75,26 +72,14 @@ class QueenRuleSpec extends AbstractSpec:
       * | * | * | * | * | * | * | *
       * | * | * | * | p | * | * | *
     })
-    this.getChessBoardFromMoves(chessGameStatus) shouldEqual ChessBoard {
-      * | Q | * | * | * | * | * | Q
-      * | * | Q | * | Q | * | Q | *
-      * | * | * | Q | Q | Q | * | *
-      * | * | * | Q | * | Q | * | *
-      * | * | * | Q | Q | Q | * | *
-      * | * | * | * | Q | * | Q | *
-      * | * | * | * | Q | * | * | Q
-      * | * | * | * | Q | * | * | *
+    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard {
+      * | * | * | * | * | * | * | X
+      * | * | X | * | X | * | X | *
+      * | * | * | X | X | X | * | *
+      * | * | * | X | * | X | * | *
+      * | * | * | X | X | X | * | *
+      * | * | * | * | X | * | X | *
+      * | * | * | * | X | * | * | X
+      * | * | * | * | X | * | * | *
     }
   }
-
-  /**
-   * @param chessGameStatus the state of the game required for evaluating the moves available to the queen
-   * @return a chess board where each positions that is reachable by the queen is marked with a white queen piece
-   */
-  private def getChessBoardFromMoves(chessGameStatus: ChessGameStatus): ChessBoard =
-    ChessBoard.fromMap {
-      queenRule
-        .findMoves(queenPosition, chessGameStatus)
-        .map { move => move.to -> Queen(Team.WHITE) }
-        .toMap[Position, Piece]
-    }
