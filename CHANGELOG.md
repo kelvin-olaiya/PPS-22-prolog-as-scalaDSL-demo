@@ -1,3 +1,39 @@
+# [0.4.0](https://github.com/jahrim/PPS-22-chess/compare/0.3.0...0.4.0) (2023-02-27)
+
+
+### Bug Fixes
+
+* add capturing piece highlight ([833a09c](https://github.com/jahrim/PPS-22-chess/commit/833a09c985de6b19385f28162f875951f7af657b))
+* add piece deselection ([dcfa0b8](https://github.com/jahrim/PPS-22-chess/commit/dcfa0b81e6272a458ad1d2cf002191e2ade2b063))
+* avoid moving a piece to a position that would cause a check to the current player and clean up code ([ce24a16](https://github.com/jahrim/PPS-22-chess/commit/ce24a162e3bd167c5396c71a3b0a31ffbc6ae853))
+* change pawn capture rule to provide CaptureMoves instead of normal Moves ([3288634](https://github.com/jahrim/PPS-22-chess/commit/3288634bef35b87461571baabb8dd188844bfeaa))
+* **deps:** update dependency org.scala-lang:scala3-library_3 to v3.2.2 ([8f9ed69](https://github.com/jahrim/PPS-22-chess/commit/8f9ed694c285b9e1320dc4ca481c2a017ba90965))
+* edit Diagonal and Straight Rules to work with the generic capture analysis ([68bcaef](https://github.com/jahrim/PPS-22-chess/commit/68bcaefe1432b1ac5b60116641a9bb87850d5bda))
+* fix capture move to create a CaptureMove instead of a Move ([041b506](https://github.com/jahrim/PPS-22-chess/commit/041b50607e205bf116918db8f56ad96c0c68823b))
+* fix piece deselection + piece selection only if it's current team turn ([ec4b6c3](https://github.com/jahrim/PPS-22-chess/commit/ec4b6c3dd2eabf1c037269bf03e1caf9fb99cc80))
+* Improve rule creation to avoid duplicating prolog engines ([197818e](https://github.com/jahrim/PPS-22-chess/commit/197818ee373972da845de30858d5b34791765180))
+* make model components immutable ([9cb5a86](https://github.com/jahrim/PPS-22-chess/commit/9cb5a8632cddeb3fce4eb2febafbdc6e11ff28bb))
+* solve pawns not being able to capture on File H ([6a0f937](https://github.com/jahrim/PPS-22-chess/commit/6a0f937c5d6be830c9b577defceef6500ccc4fbd))
+* switch turn after a move ([04fffb8](https://github.com/jahrim/PPS-22-chess/commit/04fffb8d950d87a24a81f9969f2ff14ae0a24c47))
+
+
+### Features
+
+* add avoid self check mixin ([956b707](https://github.com/jahrim/PPS-22-chess/commit/956b70782a74364e6288aba19fabc85675d28255))
+* add capture analyzis to the King and the Knight ([1373aa4](https://github.com/jahrim/PPS-22-chess/commit/1373aa43071eb76ecb7763746088fab8cab13b53))
+* add chess board situation interface ([9eb1475](https://github.com/jahrim/PPS-22-chess/commit/9eb147523ada0667456ac57d8551ffb48f243858))
+* add en passant rule and fix move history not being filled ([602e196](https://github.com/jahrim/PPS-22-chess/commit/602e196673ccc7ed87269ec0f381dc869d94498f))
+* add events that update the view after each move ([a4de5b4](https://github.com/jahrim/PPS-22-chess/commit/a4de5b45fc723729b2618206311771096632f0a7))
+* add funtionality that alternate turn between players ([3b0ca03](https://github.com/jahrim/PPS-22-chess/commit/3b0ca03df5e2d58ab2ed975bb7d0db3557962e9d))
+* add game over conditions (checkmate, stale, surrender, timeout) ([0437318](https://github.com/jahrim/PPS-22-chess/commit/043731884950c269ad7b467e5cbe00e2e4388a6d))
+* add generic rules to analyze captures for any piece ([96972d5](https://github.com/jahrim/PPS-22-chess/commit/96972d597984b577a38ffe8d591a72391cabdc35))
+* add progress indicator when starting the game ([9279cde](https://github.com/jahrim/PPS-22-chess/commit/9279cded8ca84caf4cf8817b4f525a229e625601))
+* add promotion feature ([8ba95d3](https://github.com/jahrim/PPS-22-chess/commit/8ba95d393368bed90a44891e8ded9449d3aea377))
+* add the visualization of the initial state of a game ([bfb5b6d](https://github.com/jahrim/PPS-22-chess/commit/bfb5b6d6f97c91a21ea104b32edadbefe03b40da))
+* add timer mode per move ([b679648](https://github.com/jahrim/PPS-22-chess/commit/b679648017fb2a78ccf0a0d4df9d12e85fe0370a))
+* create game configuration + update related view ([8b8e67c](https://github.com/jahrim/PPS-22-chess/commit/8b8e67cad321f3a28bf7d48086aa04fb87feba45))
+* remove chess board situation interface and add chess game analyzer ([a16c9fb](https://github.com/jahrim/PPS-22-chess/commit/a16c9fb07aeaf7d67575614c181b3d475aee6194))
+
 # [0.3.0](https://github.com/jahrim/PPS-22-chess/compare/0.2.0...0.3.0) (2023-02-20)
 
 
