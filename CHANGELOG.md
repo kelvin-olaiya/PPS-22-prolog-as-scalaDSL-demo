@@ -1,3 +1,31 @@
+# [0.5.0](https://github.com/jahrim/PPS-22-chess/compare/0.4.0...0.5.0) (2023-03-07)
+
+
+### Bug Fixes
+
+* add pawn checks that don't let it move outside the board ([8762939](https://github.com/jahrim/PPS-22-chess/commit/876293956a356e78d49a1ca6637eed6385bf07e4))
+* add the cause to the game termination window ([f281b0f](https://github.com/jahrim/PPS-22-chess/commit/f281b0ffb7414887180bba00386163966940d851))
+* avoid computing double step on some ranks ([137b380](https://github.com/jahrim/PPS-22-chess/commit/137b38062ad6b44d94c15443999dd2ba119b8c7d))
+* avoid going outside the board limits in Pawn Capture Spec ([271a226](https://github.com/jahrim/PPS-22-chess/commit/271a226de1ec779d4ac31fa554d9e519017cbf76))
+* change game to run on an event loop and to have a state ([bf7d57b](https://github.com/jahrim/PPS-22-chess/commit/bf7d57b8111625ab806a21de6289087df3539671))
+* improve first move check of the pawn ([fe9fd67](https://github.com/jahrim/PPS-22-chess/commit/fe9fd67f8528a6eee48f84cd1e471a579d67be57))
+* remove unused javafx + scalafmt dependencies from jar ([ee00a0b](https://github.com/jahrim/PPS-22-chess/commit/ee00a0bf6ba259ac7a766984be4530a42e4de4ba))
+* set promotion dialog not closeable in any way ([11f9f46](https://github.com/jahrim/PPS-22-chess/commit/11f9f46d32792f984a32dd330f0fa4609b9cd5d4))
+* set stage not resizable as default ([3871c36](https://github.com/jahrim/PPS-22-chess/commit/3871c364982e0325a8616785605a674b7750e9a9))
+* solve adversary pieces being selectable on some occasions ([d15b923](https://github.com/jahrim/PPS-22-chess/commit/d15b92324112a11a15fe4e091807db9215fd33c7))
+* solve rebase issues ([a86aa12](https://github.com/jahrim/PPS-22-chess/commit/a86aa126a199f876d06b413979f0b48c77fec00b))
+* unsubscribe to events at the end of the game ([61278d4](https://github.com/jahrim/PPS-22-chess/commit/61278d4635262884a2857f0e4781767219761dad))
+
+
+### Features
+
+* add timer constraint per player ([341cc21](https://github.com/jahrim/PPS-22-chess/commit/341cc21276c5fa3ca56ad7037fd336206e2c5796))
+
+
+### Performance Improvements
+
+* remove useless timer stopping ([7ba49c6](https://github.com/jahrim/PPS-22-chess/commit/7ba49c69eab753c7b0641c9d5be6a65655239492))
+
 # [0.4.0](https://github.com/jahrim/PPS-22-chess/compare/0.3.0...0.4.0) (2023-02-27)
 
 
