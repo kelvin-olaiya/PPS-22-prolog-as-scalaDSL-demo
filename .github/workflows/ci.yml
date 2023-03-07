@@ -35,4 +35,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          arguments: spec
+          arguments: test
+      - name: Scoverage
+        if: matrix.os == 'ubuntu-latest'
+        run: ./gradlew scoverage
+      - name: Report Scoverage
+        if: matrix.os == 'ubuntu-latest'
+        run: ./gradlew reportScoverage -PscoverageCompileOnly
+      - name: Sonarcloud Analyses
+        if: matrix.os == 'ubuntu-latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          SONARCLOUD_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+        run: ./gradlew sonar

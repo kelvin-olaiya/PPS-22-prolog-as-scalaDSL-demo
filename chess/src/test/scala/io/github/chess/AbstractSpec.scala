@@ -6,10 +6,19 @@
  */
 package io.github.chess
 
-import io.github.chess.util.debug.Logger
+import io.github.chess.util.scala.debug.Logger
+import org.awaitility.scala.AwaitilitySupport
+import org.junit.runner.RunWith
+import org.scalatest.BeforeAndAfter
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.junit.JUnitRunner
 
 /** Base Spec for all the test suites. */
-abstract class AbstractSpec extends AnyFlatSpec with Matchers:
+@RunWith(classOf[JUnitRunner])
+abstract class AbstractSpec
+    extends AnyFlatSpec
+    with Matchers
+    with AwaitilitySupport
+    with BeforeAndAfter:
   Logger.hideLogs()

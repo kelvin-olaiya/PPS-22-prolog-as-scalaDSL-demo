@@ -1,6 +1,7 @@
 [versions]
 scala-version = "3.2.2"
 scalatest-version = "3.2.15"
+scalatestplus-version = "3.2.15.0"
 spotless-version = "6.15.0"
 scalafmt-version = "3.7.1"
 wartremover-version = "3.0.9"
@@ -9,11 +10,13 @@ vertx-version = "4.3.7"
 scalafx-version = "16.0.0-R24"
 javafx-version = "16"
 tuprolog-version = "4.1.1"
+awaitility-version = "4.2.0"
 # insert the versions of the dependencies here...
 
 [libraries]
 scala = { module = "org.scala-lang:scala3-library_3", version.ref = "scala-version" }
 scalatest = { module = "org.scalatest:scalatest_3", version.ref = "scalatest-version" }
+scalatestplusjunit = { module = "org.scalatestplus:junit-4-13_3", version.ref = "scalatestplus-version" }
 scalafmt-cli = { module = "org.scalameta:scalafmt-cli_2.13", version.ref = "scalafmt-version" }
 scalafmt-config = { module = "org.scalameta:scalafmt-config_2.13", version.ref = "scalafmt-version" }
 wartremover = { module = "org.wartremover:wartremover_3.2.2", version.ref = "wartremover-version" }
@@ -24,14 +27,13 @@ javafx-controls = { module = "org.openjfx:javafx-controls", version.ref = "javaf
 javafx-fxml = { module = "org.openjfx:javafx-fxml", version.ref = "javafx-version" }
 javafx-graphics = { module = "org.openjfx:javafx-graphics", version.ref = "javafx-version" }
 javafx-media = { module = "org.openjfx:javafx-media", version.ref = "javafx-version" }
-javafx-swing = { module = "org.openjfx:javafx-swing", version.ref = "javafx-version" }
-javafx-web = { module = "org.openjfx:javafx-web", version.ref = "javafx-version" }
 tuprolog = { module = "it.unibo.alice.tuprolog:2p-core", version.ref = "tuprolog-version" }
+awaitility = { module = "org.awaitility:awaitility-scala", version.ref = "awaitility-version" }
 # insert the dependencies here...
 
 [bundles]
 scalafmt = [ "scalafmt-cli", "scalafmt-config" ]
-javafx = [ "javafx-base", "javafx-controls", "javafx-fxml", "javafx-graphics", "javafx-media", "javafx-swing", "javafx-web" ]
+javafx = [ "javafx-base", "javafx-controls", "javafx-fxml", "javafx-graphics", "javafx-media" ]
 # insert groups of dependencies here...
 
 [plugins]

@@ -10,23 +10,28 @@ plugins {
     alias(libs.plugins.kotlin.qa)
     `maven-publish`
     signing
+    id("org.scoverage")
+    id("org.sonarqube") version "3.5.0.2730"
 }
 
 repositories { mavenCentral() }
 
 dependencies {
     implementation(libs.scala)
-    implementation(libs.bundles.scalafmt)
+    compileOnly(libs.bundles.scalafmt)
     implementation(libs.vertx)
     implementation(libs.scalafx)
     libs.bundles.javafx.get().forEach {
         val fxArtifact = "${it.module}:${it.version}"
-        implementation("$fxArtifact:${JavaFX.getSpecificClassifier()}")
+        compileOnly("$fxArtifact:${JavaFX.getSpecificClassifier()}")
         JavaFX.getClassifiers().forEach { runtimeOnly("$fxArtifact:$it") } // Multiplatform Jar
     }
     implementation(libs.tuprolog)
     testImplementation(libs.scalatest)
+    testImplementation(libs.scalatestplusjunit)
+    testImplementation(libs.awaitility)
     scalaCompilerPlugins(libs.wartremover)
+    scoverage(libs.scala)
 }
 
 project.version = shellRun {
@@ -62,15 +67,6 @@ tasks.withType(ScalaCompile::class.java) {
             "-language:implicitConversions"
         ) + wartRemoverCompileOptions
 }
-
-// Scala Test
-val scalaTest by tasks.registering(JavaExec::class) {
-    dependsOn(tasks.testClasses)
-    mainClass.set("org.scalatest.tools.Runner")
-    args("-R", "build/classes/scala/test build/classes/java/test", "-o")
-    classpath(sourceSets["test"].runtimeClasspath)
-}
-tasks.test.get().dependsOn(scalaTest)
 
 // Publication
 val scaladocJar by tasks.registering(Jar::class) {
@@ -125,13 +121,6 @@ tasks {
 
     build {
         dependsOn(fatJar)
-    }
-
-    register("spec", JavaExec::class) {
-        dependsOn(testClasses)
-        mainClass.set("org.scalatest.tools.Runner")
-        setArgs(listOf("-R", "build/classes/scala/test", "-o"))
-        classpath = sourceSets.test.get().runtimeClasspath
     }
 }
 
@@ -205,4 +194,24 @@ signing {
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications[publicationName])
+}
+
+val organization = "jahrim"
+val githubUrl = "https://github.com/$organization/${rootProject.name}"
+
+sonarqube.properties {
+    property("sonar.organization", organization)
+    property("sonar.host.url", "https://sonarcloud.io")
+    property("sonar.projectName", rootProject.name)
+    property("sonar.projectKey", "${organization}_${rootProject.name}")
+    property("sonar.projectDescription", "Project for PPS.")
+    property("sonar.projectVersion", project.version.toString())
+    System.getenv()["SONARCLOUD_TOKEN"]?.let { property("sonar.login", it) }
+    property("sonar.scm.provider", "git")
+    property("sonar.verbose", "true")
+    property("sonar.links.homepage", githubUrl)
+    property("sonar.links.ci", "$githubUrl/actions")
+    property("sonar.links.scm", githubUrl)
+    property("sonar.links.issue", "$githubUrl/issues")
+    property("sonar.scala.coverage.reportPaths", "${project.buildDir}/reports/scoverage/scoverage.xml")
 }

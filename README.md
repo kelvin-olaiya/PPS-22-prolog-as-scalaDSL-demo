@@ -21,8 +21,21 @@ System documentation is available at [GitHub Pages](https://jahrim.github.io/PPS
 
 [![Build](https://github.com/jahrim/PPS-22-chess/actions/workflows/ci.yml/badge.svg)](https://github.com/jahrim/PPS-22-chess/actions/workflows/ci.yml)
 
+### Code Quality:
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=jahrim_PPS-22-chess&metric=bugs)](https://sonarcloud.io/summary/overall?id=jahrim_PPS-22-chess)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jahrim_PPS-22-chess&metric=duplicated_lines_density)](https://sonarcloud.io/summary/overall?id=jahrim_PPS-22-chess)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jahrim_PPS-22-chess&metric=coverage)](https://sonarcloud.io/summary/overall?id=jahrim_PPS-22-chess)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=jahrim_PPS-22-chess&metric=code_smells)](https://sonarcloud.io/summary/overall?id=jahrim_PPS-22-chess)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=jahrim_PPS-22-chess&metric=sqale_index)](https://sonarcloud.io/summary/overall?id=jahrim_PPS-22-chess)
+
 ## License
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fjahrim%2FPPS-22-chess.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fjahrim%2FPPS-22-chess?ref=badge_shield)
 
 Licensed under the [MIT License](LICENSE).
+
+## Attributions
+
+- All files in directory _buildSrc/src/main/groovy/org.scoverage/_ have been copied from _gradle-scoverage_ plugin 
+  at [this](https://github.com/scoverage/gradle-scoverage/pull/188) pull request.

@@ -6,26 +6,23 @@
  */
 package io.github.chess.util.general
 
-import io.github.chess.model.Position
-
 /** Combinator object providing combination generations. */
 object Combinator:
 
   /**
-   * Generate a set of positions, starting from a specific [[Position]] and combining it with the values as [[io.github.chess.model.File]] and [[io.github.chess.model.Rank]]
+   * Generate a set of coordinates, starting from a specific couple of coordinates and combining it with the values as X and Y.
    * @param values values to combine
-   * @param condition condition used to filter the combinations
-   * @param position starting [[Position]]
-   * @return
+   * @param initialCoords initial coordinates a couple of (Int, Int)
+   * @param condition condition used to filter the combinations, default to true
+   * @return a [[Set]] of coordinates (Int, Int)
    */
-  def generatePositions(
+  def generateCoordinates(
       values: Set[Int],
-      condition: (Int, Int) => Boolean,
-      position: Position
+      initialCoords: (Int, Int),
+      condition: (Int, Int) => Boolean = (_, _) => true
   ): Set[(Int, Int)] =
-    for (
-      x <- values;
+    for {
+      x <- values
       y <- values
       if condition(x, y)
-    )
-      yield (position.file.ordinal + x, position.rank.ordinal + y)
+    } yield (initialCoords._1 + x, initialCoords._2 + y)
