@@ -1,9 +1,14 @@
 # PPS-22-chess
 
-Project for pps.
+Project for _Paradigmi di Programmazione e Sviluppo_.
 
 System documentation is available at [GitHub Pages](https://jahrim.github.io/PPS-22-chess/).  
 <br/>
+
+## Requirements
+
+To play the game you need to have installed:
+- _**JDK 11+**_.
 
 ### GitHub Release:
 
@@ -39,3 +44,7 @@ Licensed under the [MIT License](LICENSE).
 
 - All files in directory _buildSrc/src/main/groovy/org.scoverage/_ have been copied from _gradle-scoverage_ plugin 
   at [this](https://github.com/scoverage/gradle-scoverage/pull/188) pull request.
+- The icons of the chess pieces were created starting from the outlines provided by:
+  <a href="https://www.flaticon.com/authors/deemakdaksina" title="deemakdaksina">deemakdaksina</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+- The icon of the application was provided by:
+  <a href="https://www.flaticon.com/authors/freepik" title="chess icons">Freepik - Flaticon</a>
