@@ -1,3 +1,23 @@
+# [0.6.0](https://github.com/jahrim/PPS-22-chess/compare/0.5.0...0.6.0) (2023-03-14)
+
+
+### Bug Fixes
+
+* center game configuration page ([3da1e35](https://github.com/jahrim/PPS-22-chess/commit/3da1e35930c41a143c141a044eb9259e1722e227))
+* center main menu page ([e64767d](https://github.com/jahrim/PPS-22-chess/commit/e64767d5ad620ca9092da53013850c0a25520025))
+* change Promote API + fix turn changed ([67a30aa](https://github.com/jahrim/PPS-22-chess/commit/67a30aae9c747c199f51ef6570156f4f286b97a9))
+* change VerticleExecutor to remove the task from the pending tasks when its execution is completed ([531baf7](https://github.com/jahrim/PPS-22-chess/commit/531baf741a53373e5418f46d04101d0071ba037e))
+* **deps:** update dependency io.vertx:vertx-core to v4.4.0 ([3990e51](https://github.com/jahrim/PPS-22-chess/commit/3990e51df1d6c58d75c696a1d68eeeb8de80722e))
+* **deps:** update dependency org.wartremover:wartremover_3.2.2 to v3.0.11 ([bfb635b](https://github.com/jahrim/PPS-22-chess/commit/bfb635b65520fee5a1d73ea07bf46bfcb95ae366))
+* initialize all the Prolog Rules when starting the game ([f0d876e](https://github.com/jahrim/PPS-22-chess/commit/f0d876e4656a875f20b53ecbe5509fefe5246840))
+* remove unused parameter + not needed brackets ([6bdda25](https://github.com/jahrim/PPS-22-chess/commit/6bdda25a4b887029c41a71a16e9c7b01e6e13747))
+* run promotion painting on correct thread ([2c8ef22](https://github.com/jahrim/PPS-22-chess/commit/2c8ef224573df6146134726712d310f4959e9904))
+
+
+### Features
+
+* create check notification ([2f718be](https://github.com/jahrim/PPS-22-chess/commit/2f718be26d726c94777608ba8d6745ff9b13e624))
+
 # [0.5.0](https://github.com/jahrim/PPS-22-chess/compare/0.4.0...0.5.0) (2023-03-07)
 
 
