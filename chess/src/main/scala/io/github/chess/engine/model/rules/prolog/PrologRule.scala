@@ -11,6 +11,9 @@ import io.github.chess.engine.model.board.Position
 import Position.given
 import io.github.chess.util.general.PrologEngine.given
 import io.github.chess.util.general.PrologEngine
+import io.github.kelvindev15.prolog.PrologProgram
+import io.github.kelvindev15.prolog.dsl.{DeclarativeProlog, PrologDSL}
+import io.github.kelvindev15.prolog.solver.Solver
 
 /**
  * Represents a Prolog rule that must be structured in the following way:
@@ -24,9 +27,9 @@ import io.github.chess.util.general.PrologEngine
  *  - AF is Arrival File
  *  - AR is Arrival Rank
  */
-trait PrologRule(val theory: String):
+trait PrologRule(val theoryGoal: String) extends PrologDSL with DeclarativeProlog:
 
-  private val engine: PrologEngine = PrologEngine("/theories/" + theory + ".pl")
+  protected val prologTheory: PrologProgram
 
   /**
    * Generates new coordinates starting from a particular [[Position]].
@@ -35,13 +38,9 @@ trait PrologRule(val theory: String):
    */
   def findPositions(position: Position): LazyList[(Int, Int)] =
     val coords: (Int, Int) = position
-    val xString = "X"
-    val yString = "Y"
-    val goal = s"$theory(${coords._1}, ${coords._2}, $xString, $yString)"
-    engine
-      .solveAll(goal, xString, yString)
-      .map(term => {
-        val x = term(xString).toString.toInt
-        val y = term(yString).toString.toInt
-        (x, y)
-      })
+    for
+      solution <- Solver lazySolve (prologTheory withGoal theoryGoal(coords._1, coords._2, X, Y))
+      if solution.isYes
+      x <- solution(X)
+      y <- solution(Y)
+    yield (x.toString.toInt, y.toString.toInt)

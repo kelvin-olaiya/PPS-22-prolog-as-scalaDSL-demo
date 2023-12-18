@@ -32,6 +32,7 @@ dependencies {
     testImplementation(libs.awaitility)
     scalaCompilerPlugins(libs.wartremover)
     scoverage(libs.scala)
+    implementation("io.github.kelvindev15:prolog-as-scaladsl_3:4.2.0")
 }
 
 project.version = shellRun {

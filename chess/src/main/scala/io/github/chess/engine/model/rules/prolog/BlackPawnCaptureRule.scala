@@ -6,5 +6,31 @@
  */
 package io.github.chess.engine.model.rules.prolog
 
+import io.github.kelvindev15.prolog.PrologProgram
+import io.github.kelvindev15.prolog.dsl.{DeclarativeProlog, PrologDSL}
+
 /** Class representing the prolog rule that finds all capture moves of a black pawn. */
-class BlackPawnCaptureRule extends PrologRule("black_pawn_capture") with InsideBoardFilterRule()
+class BlackPawnCaptureRule
+    extends PrologRule("black_pawn_capture")
+    with DeclarativeProlog
+    with InsideBoardFilterRule()
+    with PrologDSL:
+
+  /*
+  black_pawn_capture(F,R,FD,RD) :- RD is R - 1, pawn_capture_file(F,R,FD,RD) .
+
+  pawn_capture_file(F,R,FD,RD) :- FD is F + 1 .
+  pawn_capture_file(F,R,FD,RD) :- FD is F - 1 .
+   */
+  private val FD = varOf("FD")
+  private val RD = varOf("RD")
+  private val black_pawn_capture = "black_pawn_capture"
+  private val pawn_capture_file = "pawn_capture_file"
+  override val prologTheory: PrologProgram = prolog {
+    programTheory:
+      rule {
+        black_pawn_capture(F, R, FD, RD) :- &&(RD is "-" (R, 1), pawn_capture_file(F, R, FD, RD))
+      }
+      rule { pawn_capture_file(F, R, FD, RD) :- FD is (F + 1) }
+      rule { pawn_capture_file(F, R, FD, RD) :- FD is "-" (F, 1) }
+  }
