@@ -23,13 +23,12 @@ class PawnMovementRule extends ChessRule with RuleShorthands:
     else firstStep
 
   private def isFirstMove(position: Position, status: ChessGameStatus): Boolean =
-    within(status) {
+    within(status):
       isFirstMovementOf(position) && (pieceAt(position) match
         case Some(pawn: Pawn) if pawn.team == Team.WHITE => position.rank == Rank._2
         case Some(pawn: Pawn) if pawn.team == Team.BLACK => position.rank == Rank._7
         case _                                           => false
       )
-    }
 
 /** Companion object of [[PawnMovementRule]]. */
 object PawnMovementRule:

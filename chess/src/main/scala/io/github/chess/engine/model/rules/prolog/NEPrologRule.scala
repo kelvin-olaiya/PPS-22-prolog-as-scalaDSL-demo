@@ -6,5 +6,13 @@
  */
 package io.github.chess.engine.model.rules.prolog
 
+import io.github.kelvindev15.prolog.PrologProgram
+import io.github.kelvindev15.prolog.dsl.DeclarativeProlog
+
 /** Class representing the prolog rule that finds all moves in the North-East direction. */
-class NEPrologRule extends PrologRule("ne_move") with InsideBoardRule()
+class NEPrologRule extends PrologRule("ne_move") with InsideBoardRule():
+  override protected val prologTheory: PrologProgram = prolog:
+    programTheory:
+      rule { theoryGoal(FS, RS, FD, RD) :- theoryGoal(FS, RS, 1, FD, RD) }
+      rule { theoryGoal(FS, RS, X, FD, RD) :- &&(FD is (FS + X), RD is (RS + X)) }
+      rule { theoryGoal(FS, RS, X, FD, RD) :- &&(X1 is (X + 1), theoryGoal(FS, RS, X1, FD, RD)) }

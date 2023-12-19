@@ -16,7 +16,7 @@ import io.github.chess.engine.model.rules.AbstractChessRuleSpec
 class RookRuleSpec extends AbstractChessRuleSpec:
   val rookPosition: Position = Position(File.E, Rank._5)
 
-  "The rook" should "move in all straight directions" in {
+  "The rook" should "move in all straight directions" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(ChessBoard {
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
@@ -27,7 +27,7 @@ class RookRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
     })
-    getChessBoardFromMoves(rookPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(rookPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | * | * | X | * | * | *
       * | * | * | * | X | * | * | *
       * | * | * | * | X | * | * | *
@@ -36,10 +36,8 @@ class RookRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | X | * | * | *
       * | * | * | * | X | * | * | *
       * | * | * | * | X | * | * | *
-    }
-  }
 
-  it should "be blocked by pieces of the same team" in {
+  it should "be blocked by pieces of the same team" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(ChessBoard {
       * | * | * | * | * | * | * | *
       * | * | * | * | K | * | * | *
@@ -50,7 +48,7 @@ class RookRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | N | * | * | *
       * | * | * | * | * | * | * | *
     })
-    getChessBoardFromMoves(rookPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(rookPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
       * | * | * | * | X | * | * | *
@@ -59,10 +57,8 @@ class RookRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | X | * | * | *
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
-    }
-  }
 
-  it should "be able to capture pieces of the opposite team" in {
+  it should "be able to capture pieces of the opposite team" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(ChessBoard {
       * | * | * | * | * | * | * | *
       * | * | * | * | p | * | * | *
@@ -73,7 +69,7 @@ class RookRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | * | * | * | *
       * | * | * | * | p | * | * | *
     })
-    getChessBoardFromMoves(rookPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(rookPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | * | * | * | * | * | *
       * | * | * | * | X | * | * | *
       * | * | * | * | X | * | * | *
@@ -82,5 +78,3 @@ class RookRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | X | * | * | *
       * | * | * | * | X | * | * | *
       * | * | * | * | X | * | * | *
-    }
-  }

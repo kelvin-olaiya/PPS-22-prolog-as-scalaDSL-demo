@@ -13,9 +13,8 @@ class IdSpec extends AbstractSpec:
   val numberOfIds: Long = 10000
   val errorThreshold: Double = 1e-3
 
-  "The scala Id utility" should "provide unique identifiers with a certain degree of confidence" in {
+  "The scala Id utility" should "provide unique identifiers with a certain degree of confidence" in:
     percentageOfDuplicatedIds should be < errorThreshold
-  }
 
   /**
    * Generates a set of identifiers.

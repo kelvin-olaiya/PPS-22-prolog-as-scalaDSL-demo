@@ -18,9 +18,8 @@ import io.vertx.core.{Future, Promise, Vertx}
 /** The main application. */
 @main def main(): Unit =
   deployServiceLocally()
-    .map {
+    .map:
       deployApplicationLocally(_)
-    }
     .onFailure { error =>
       error.printStackTrace()
       System.exit(1)

@@ -14,8 +14,8 @@ import io.github.chess.engine.model.pieces.Pawn
 /** Test suit for the [[ChessBoardBuilder]]. */
 class ChessBoardBuilderDSLSpec extends AbstractSpec:
 
-  "The DSL of a chess board builder" should "provide a working syntax for faster configuration" in {
-    val chessBoardBuilder: ChessBoardBuilder = ChessBoardBuilder.configure {
+  "The DSL of a chess board builder" should "provide a working syntax for faster configuration" in:
+    val chessBoardBuilder: ChessBoardBuilder = ChessBoardBuilder.configure:
       p | p | p | p | p | p | p | p
       p | p | p | p | p | p | p | p
       * | * | * | * | * | * | * | *
@@ -24,10 +24,9 @@ class ChessBoardBuilderDSLSpec extends AbstractSpec:
       * | * | * | * | * | * | * | *
       P | P | P | P | P | P | P | P
       P | P | P | P | P | P | P | P
-    }
     ChessBoard.Positions
       .map { position => position -> chessBoardBuilder.build.pieces.get(position) }
-      .foreach {
+      .foreach:
         case (position, piece) if Set(Rank._8, Rank._7)(position.rank) =>
           piece shouldBe defined
           piece.foreach(_ shouldEqual Pawn(Team.BLACK))
@@ -35,11 +34,9 @@ class ChessBoardBuilderDSLSpec extends AbstractSpec:
           piece shouldBe defined
           piece.foreach(_ shouldEqual Pawn(Team.WHITE))
         case (_, piece) => piece shouldNot be(defined)
-      }
-  }
 
-  it should "provide a syntax for defining empty rows quickly" in {
-    val chessBoardBuilder: ChessBoardBuilder = ChessBoardBuilder.configure {
+  it should "provide a syntax for defining empty rows quickly" in:
+    val chessBoardBuilder: ChessBoardBuilder = ChessBoardBuilder.configure:
       p | p | * | * | p | * | * | *
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
@@ -48,9 +45,8 @@ class ChessBoardBuilderDSLSpec extends AbstractSpec:
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
       P | P | P | * | * | * | * | *
-    }
     // Note: semicolons are actually required BEFORE ** if it is used in a line by itself (** is infix for scala)
-    val otherChessBoardBuilder: ChessBoardBuilder = ChessBoardBuilder.configure {
+    val otherChessBoardBuilder: ChessBoardBuilder = ChessBoardBuilder.configure:
       p | p | * | * | p | **;
       **;
       **;
@@ -59,13 +55,10 @@ class ChessBoardBuilderDSLSpec extends AbstractSpec:
       **;
       **;
       P | P | P | **;
-    }
     // Note: this is more compact and does not require any semicolon
-    val yetAnotherChessBoardBuilder: ChessBoardBuilder = ChessBoardBuilder.configure {
+    val yetAnotherChessBoardBuilder: ChessBoardBuilder = ChessBoardBuilder.configure:
       p | p | * | * | p | ** { 3 }
       p | p | ** { 4 }
       P | P | P | **
-    }
     chessBoardBuilder.build shouldEqual otherChessBoardBuilder.build
     chessBoardBuilder.build shouldEqual yetAnotherChessBoardBuilder.build
-  }

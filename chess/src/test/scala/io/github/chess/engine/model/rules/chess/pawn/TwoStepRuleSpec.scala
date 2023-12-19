@@ -12,30 +12,28 @@ import io.github.chess.engine.model.board.Position
 class TwoStepRuleSpec extends AbstractPawnSpec:
 
   "Two Step Rule" should "always give the position that would make a white pawn advance by two steps " +
-    "in north direction when it's in the initial position" in {
-      whitePawnInitialPositions.foreach(initialPos => {
-        addPiece(initialPos, whitePawn)
-        val arrivingPosition = initialPos.rankUp().rankUp()
+    "in north direction when it's in the initial position" in:
+    whitePawnInitialPositions.foreach(initialPos => {
+      addPiece(initialPos, whitePawn)
+      val arrivingPosition = initialPos.rankUp().rankUp()
 
-        TwoStepRule().findMoves(initialPos, status).map(_.to) should contain theSameElementsAs Set(
-          arrivingPosition
-        )
-      })
-    }
+      TwoStepRule().findMoves(initialPos, status).map(_.to) should contain theSameElementsAs Set(
+        arrivingPosition
+      )
+    })
 
   it should "always give the position that would make a black pawn advance by two steps in south direction, " +
-    "when it's in the initial position" in {
-      blackPawnInitialPositions.foreach(initialPos => {
-        addPiece(initialPos, blackPawn)
-        val arrivingPosition = initialPos.rankDown().rankDown()
+    "when it's in the initial position" in:
+    blackPawnInitialPositions.foreach(initialPos => {
+      addPiece(initialPos, blackPawn)
+      val arrivingPosition = initialPos.rankDown().rankDown()
 
-        TwoStepRule().findMoves(initialPos, status).map(_.to) should contain theSameElementsAs Set(
-          arrivingPosition
-        )
-      })
-    }
+      TwoStepRule().findMoves(initialPos, status).map(_.to) should contain theSameElementsAs Set(
+        arrivingPosition
+      )
+    })
 
-  it should "give an empty set if called on a pawn positioned on the adversary border" in {
+  it should "give an empty set if called on a pawn positioned on the adversary border" in:
     val whitePawnPosition: Position = (4, 7)
     addPiece(whitePawnPosition, whitePawn)
     TwoStepRule().findMoves(whitePawnPosition, status) should be(empty)
@@ -43,9 +41,8 @@ class TwoStepRuleSpec extends AbstractPawnSpec:
     val blackPawnPosition: Position = (4, 0)
     addPiece(blackPawnPosition, blackPawn)
     TwoStepRule().findMoves(blackPawnPosition, status) should be(empty)
-  }
 
-  it should "give an empty set if called on a pawn positioned on the rank before the adversary border" in {
+  it should "give an empty set if called on a pawn positioned on the rank before the adversary border" in:
     val whitePawnPosition: Position = (4, 6)
     addPiece(whitePawnPosition, whitePawn)
     TwoStepRule().findMoves(whitePawnPosition, status) should be(empty)
@@ -53,4 +50,3 @@ class TwoStepRuleSpec extends AbstractPawnSpec:
     val blackPawnPosition: Position = (4, 1)
     addPiece(blackPawnPosition, blackPawn)
     TwoStepRule().findMoves(blackPawnPosition, status) should be(empty)
-  }

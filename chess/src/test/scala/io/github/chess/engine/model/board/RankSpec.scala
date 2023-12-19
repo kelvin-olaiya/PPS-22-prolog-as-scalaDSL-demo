@@ -21,7 +21,7 @@ class RankSpec extends AbstractSpec:
   private val _7: Rank = Rank._7
   private val _8: Rank = Rank._8
 
-  "A rank" should "follow the Universal Chess Interface protocol representation" in {
+  "A rank" should "follow the Universal Chess Interface protocol representation" in:
     "1" shouldEqual _1.toString
     "2" shouldEqual _2.toString
     "3" shouldEqual _3.toString
@@ -30,9 +30,8 @@ class RankSpec extends AbstractSpec:
     "6" shouldEqual _6.toString
     "7" shouldEqual _7.toString
     "8" shouldEqual _8.toString
-  }
 
-  it should "correctly ranked up" in {
+  it should "correctly ranked up" in:
     _2 shouldEqual _1.up()
     _3 shouldEqual _2.up()
     _4 shouldEqual _3.up()
@@ -41,9 +40,8 @@ class RankSpec extends AbstractSpec:
     _7 shouldEqual _6.up()
     _8 shouldEqual _7.up()
     an[OutsideBoardException] should be thrownBy _8.up()
-  }
 
-  it should "correctly ranked down" in {
+  it should "correctly ranked down" in:
     an[OutsideBoardException] should be thrownBy _1.down()
     _1 shouldEqual _2.down()
     _2 shouldEqual _3.down()
@@ -52,4 +50,3 @@ class RankSpec extends AbstractSpec:
     _5 shouldEqual _6.down()
     _6 shouldEqual _7.down()
     _7 shouldEqual _8.down()
-  }

@@ -17,6 +17,7 @@ import io.github.chess.application.viewcontroller.controllers.ChessBoardControll
 import io.github.chess.application.viewcontroller.controllers.ChessBoardController.State.*
 import io.github.chess.application.viewcontroller.pages.components.{CellView, PieceView}
 import io.github.chess.util.general.StatefulSystem
+import javafx.scene.Node
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
@@ -26,6 +27,7 @@ import scalafx.stage.Stage
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.reflect.TypeTest
 import scala.util.{Failure, Success}
 
 /**
@@ -48,30 +50,29 @@ case class ChessBoardController private (
    * @param chessBoard the specified state of the chess board
    */
   def repaint(chessBoard: Map[Position, Piece]): Unit =
-    Platform.runLater {
+    Platform.runLater:
       this.clearPieces()
       this.chessBoardBelief = chessBoard
       this.chessBoardBelief.foreach { (position, piece) =>
         this.cells.get(position).foreach { _.setPiece(PieceView(piece, piece.team)) }
       }
-    }
 
   /**
    * Paint only one cell.
    * @param entry entry containing the position and its associated piece
    */
   def paint(entry: (Position, Piece)): Unit =
-    Platform.runLater {
+    Platform.runLater:
       this.chessBoardBelief = this.chessBoardBelief + entry
       this.cells.get(entry._1).foreach { _.setPiece(PieceView(entry._2, entry._2.team)) }
-    }
 
   /** Removes all pieces from the chess board view. */
   private def clearPieces(): Unit =
     ChessBoard.Positions.foreach { position =>
-      this.cells.get(position).foreach {
-        _.removePiece()
-      }
+      this.cells
+        .get(position)
+        .foreach:
+          _.removePiece()
     }
 
   /**
@@ -99,15 +100,13 @@ case class ChessBoardController private (
    * @param clickedCell the specified cell
    */
   private def performCheckedSelection(clickedCell: CellView): Unit =
-    this.context.chessEngineProxy.getState.onComplete {
+    this.context.chessEngineProxy.getState.onComplete:
       case Success(Running(status)) =>
-        Platform.runLater {
+        Platform.runLater:
           this.chessBoardBelief.get(clickedCell.position) match
             case Some(piece) if piece.team == status.currentTurn => this.selectCell(clickedCell)
             case _                                               => enter(NoneSelected)
-        }
       case _ =>
-    }
 
   /**
    * Select the specified cell, checking if any piece was selected.
@@ -116,11 +115,10 @@ case class ChessBoardController private (
   private def selectCell(cell: CellView): Unit =
     this.chessBoardBelief.get(cell.position).map(_ => cell) match
       case Some(selectedCell) =>
-        getAvailableMoves(selectedCell).onComplete {
+        getAvailableMoves(selectedCell).onComplete:
           case Success(availableMoves) =>
             Platform.runLater { enter(PieceSelected(selectedCell, availableMoves)) }
           case Failure(exception) => throw exception
-        }
       case None =>
         enter(NoneSelected)
 
@@ -176,10 +174,14 @@ object ChessBoardController:
    */
   def fromGridPane(
       grid: GridPane
-  )(stage: Stage)(using context: ChessApplicationContext): ChessBoardController =
+  )(
+      stage: Stage
+  )(using context: ChessApplicationContext): ChessBoardController =
     ChessBoardController(
       grid.cells
-        .collect { case cell: GridCell[Pane] => CellView(cell); }
+        .collect { case cell: GridCell[Pane] =>
+          CellView(cell);
+        }
         .map { c => c.position -> c }
         .toMap[Position, CellView]
     )(stage)(using context)

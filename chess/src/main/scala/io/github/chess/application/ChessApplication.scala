@@ -29,10 +29,9 @@ object ChessApplication extends JFXApp3:
    * @param args the specified arguments
    */
   def launch(chessEngineProxy: ChessPort)(args: Array[String]): Unit =
-    Future {
+    Future:
       this.contextBuilder.setChessEngineProxy(chessEngineProxy)
       this.main(args)
-    }
 
   override def start(): Unit =
     stageConfiguration()

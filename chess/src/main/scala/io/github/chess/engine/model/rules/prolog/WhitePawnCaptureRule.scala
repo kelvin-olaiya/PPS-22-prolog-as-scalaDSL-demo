@@ -5,6 +5,12 @@
  * Full license description available at: https://github.com/jahrim/PPS-22-chess/blob/master/LICENSE
  */
 package io.github.chess.engine.model.rules.prolog
+import io.github.kelvindev15.prolog.PrologProgram
 
 /** Class representing the prolog rule that finds all capture moves of a white pawn. */
-class WhitePawnCaptureRule extends PrologRule("white_pawn_capture") with InsideBoardFilterRule()
+class WhitePawnCaptureRule extends PrologRule("white_pawn_capture") with InsideBoardFilterRule():
+  override protected val prologTheory: PrologProgram = prolog:
+    programTheory:
+      rule { white_pawn_capture(F, R, FD, RD) :- &&(RD is R + 1, pawn_capture_file(F, R, FD, RD)) }
+      rule { pawn_capture_file(F, R, FD, RD) :- (FD is (F + 1)) }
+      rule { pawn_capture_file(F, R, FD, RD) :- (FD is (F - 1)) }

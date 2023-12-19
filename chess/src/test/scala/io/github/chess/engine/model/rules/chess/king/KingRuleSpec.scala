@@ -16,7 +16,7 @@ class KingRuleSpec extends AbstractChessRuleSpec:
 
   private val kingPosition = Position(File.E, Rank._5)
 
-  private val chessBoardOnlyKing = ChessBoard {
+  private val chessBoardOnlyKing = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
@@ -25,8 +25,7 @@ class KingRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesOnlyKing = ChessBoard {
+  private val chessBoardMovesOnlyKing = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | X | X | X | * | *
@@ -35,14 +34,12 @@ class KingRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
 
-  "The king rule" should "allow the king to move in all the directions stepped by one" in {
+  "The king rule" should "allow the king to move in all the directions stepped by one" in:
     val chessGameStatus = ChessGameStatus(chessBoardOnlyKing)
     getChessBoardFromMoves(kingPosition, chessGameStatus) shouldEqual chessBoardMovesOnlyKing
-  }
 
-  private val chessBoardWithAllies = ChessBoard {
+  private val chessBoardWithAllies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | R | * | B | * | *
@@ -51,8 +48,7 @@ class KingRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesWithAllies = ChessBoard {
+  private val chessBoardMovesWithAllies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | X | * | * | *
@@ -61,14 +57,12 @@ class KingRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
 
-  it should "avoid the movement over the allied pieces" in {
+  it should "avoid the movement over the allied pieces" in:
     val chessGameStatus = ChessGameStatus(chessBoardWithAllies)
     getChessBoardFromMoves(kingPosition, chessGameStatus) shouldEqual chessBoardMovesWithAllies
-  }
 
-  private val chessBoardWithEnemies = ChessBoard {
+  private val chessBoardWithEnemies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | R | * | B | * | *
@@ -77,8 +71,7 @@ class KingRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesWithEnemies = ChessBoard {
+  private val chessBoardMovesWithEnemies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | X | * | * | *
@@ -87,15 +80,13 @@ class KingRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
 
-  it should "allow to capture enemy pieces" in {
+  it should "allow to capture enemy pieces" in:
     val chessGameStatus = ChessGameStatus(chessBoardWithEnemies)
     getChessBoardFromMoves(kingPosition, chessGameStatus) shouldEqual chessBoardMovesWithEnemies
-  }
 
   private val castlingPosition = Position.whiteKingPosition
-  private val chessBoardForCastling = ChessBoard {
+  private val chessBoardForCastling = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
@@ -104,8 +95,7 @@ class KingRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     R | * | * | * | K | * | * | R
-  }
-  private val chessBoardMovesForCastling = ChessBoard {
+  private val chessBoardMovesForCastling = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
@@ -114,9 +104,7 @@ class KingRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | X | X | X | * | *
     * | * | X | X | * | X | X | *
-  }
 
-  it should "allow to castling" in {
+  it should "allow to castling" in:
     val chessGameStatus = ChessGameStatus(chessBoardForCastling)
     getChessBoardFromMoves(castlingPosition, chessGameStatus) shouldEqual chessBoardMovesForCastling
-  }

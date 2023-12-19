@@ -12,11 +12,10 @@ import GivenExtension.*
 /** Test suit for the [[GivenExtension]]. */
 class GivenExtensionSpec extends AbstractSpec:
 
-  "The scala given extension" should "provide an easier way to define given instances" in {
+  "The scala given extension" should "provide an easier way to define given instances" in:
     within("someValue") { givenInstance[String] shouldBe "someValue" }
     within("someOtherValue") { givenInstance[String] shouldBe "someOtherValue" }
     within(1234) { givenInstance[Int] shouldBe 1234 }
-  }
 
   /**
    * @tparam T the specified type

@@ -14,7 +14,7 @@ class PawnRulesSpec extends AbstractPawnSpec:
 
   val pawnCentralPosition: Position = (4, 3)
 
-  "The pawn" should "be able to move one or two steps forward form the initial position" in {
+  "The pawn" should "be able to move one or two steps forward form the initial position" in:
     val pawnInitialPosition: Position = (4, 1)
     addPiece(pawnInitialPosition, whitePawn)
     val moves = PawnRule().findMoves(pawnInitialPosition, status)
@@ -22,17 +22,15 @@ class PawnRulesSpec extends AbstractPawnSpec:
       pawnInitialPosition.rankUp(),
       pawnInitialPosition.rankUp().rankUp()
     )
-  }
 
-  it should "be able to move only one step forward if it's not its initial position" in {
+  it should "be able to move only one step forward if it's not its initial position" in:
     addPiece(pawnCentralPosition, whitePawn)
     val moves = PawnRule().findMoves(pawnCentralPosition, status)
     moves.map(_.to) should contain theSameElementsAs Set(
       pawnCentralPosition.rankUp()
     )
-  }
 
-  it should "be able to capture if there is an enemy on the adjacent diagonal position" in {
+  it should "be able to capture if there is an enemy on the adjacent diagonal position" in:
     val blackPawnPosition: Position = (5, 4)
     addPiece(pawnCentralPosition, whitePawn)
     addPiece(blackPawnPosition, blackPawn)
@@ -44,9 +42,8 @@ class PawnRulesSpec extends AbstractPawnSpec:
     val blackMoves = PawnRule().findMoves(blackPawnPosition, status)
     blackMoves should have size 2
     blackMoves.map(_.to) should contain(blackPawnPosition.rankDown().fileBackward())
-  }
 
-  it should "be able to capture an enemy pawn with the En Passant move, only if a DoubleMove was performed" in {
+  it should "be able to capture an enemy pawn with the En Passant move, only if a DoubleMove was performed" in:
     val whitePawnPosition: Position = (4, 4)
 
     val blackPawnOnBoard = blackPawn
@@ -67,9 +64,8 @@ class PawnRulesSpec extends AbstractPawnSpec:
     val movesAfterDoubleMove = PawnRule().findMoves(whitePawnPosition, status)
     movesAfterDoubleMove should contain(capturingMove)
     movesAfterDoubleMove.map(_.to) should not contain notCapturingPosition
-  }
 
-  it should "be unable to move forward if there is an enemy piece in the next cell" in {
+  it should "be unable to move forward if there is an enemy piece in the next cell" in:
     val blackPawnPosition: Position = (4, 4)
     addPiece(pawnCentralPosition, whitePawn)
     addPiece(blackPawnPosition, blackPawn)
@@ -79,9 +75,8 @@ class PawnRulesSpec extends AbstractPawnSpec:
 
     val blackMoves = PawnRule().findMoves(blackPawnPosition, status)
     blackMoves should be(empty)
-  }
 
-  it should "be unable to capture if there is an ally piece in the destination cell" in {
+  it should "be unable to capture if there is an ally piece in the destination cell" in:
     val capturingPositionWithEnemy: Position = (3, 4)
     val capturingPositionWithAlly: Position = (5, 4)
     addPiece(pawnCentralPosition, whitePawn)
@@ -92,4 +87,3 @@ class PawnRulesSpec extends AbstractPawnSpec:
     move should have size 2
     move.map(_.to) should contain(capturingPositionWithEnemy)
     move.map(_.to) should not contain capturingPositionWithAlly
-  }

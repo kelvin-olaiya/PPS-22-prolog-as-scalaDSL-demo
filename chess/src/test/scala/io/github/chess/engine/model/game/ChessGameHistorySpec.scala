@@ -22,24 +22,20 @@ class ChessGameHistorySpec extends AbstractSpec:
   private val otherMoves: Seq[Move] =
     Seq(Move((4, 0), (4, 1)), Move((4, 1), (4, 2)), Move((4, 2), (4, 3)))
 
-  "The history of moves in a chess game" should "be initially empty" in {
+  "The history of moves in a chess game" should "be initially empty" in:
     ChessGameHistory().all shouldBe empty
-  }
 
-  it should "remember the moves after they have been saved in it" in {
+  it should "remember the moves after they have been saved in it" in:
     ChessGameHistory().saveAll(moves.map { (piece, _) }).all shouldEqual moves
-  }
 
-  it should "remember the moves of different pieces after they have been saved in it" in {
+  it should "remember the moves of different pieces after they have been saved in it" in:
     ChessGameHistory()
       .saveAll(moves.map { (piece, _) })
       .saveAll(otherMoves.map { (otherPiece, _) })
       .all shouldEqual moves :++ otherMoves
-  }
 
-  it should "allow to query the moves of a specific piece after they have been saved in it" in {
+  it should "allow to query the moves of a specific piece after they have been saved in it" in:
     ChessGameHistory()
       .saveAll(moves.map { (piece, _) })
       .saveAll(otherMoves.map { (otherPiece, _) })
       .ofPiece(otherPiece) shouldEqual otherMoves
-  }

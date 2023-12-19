@@ -16,7 +16,7 @@ class BishopRuleSpec extends AbstractChessRuleSpec:
 
   private val bishopPosition = Position(File.E, Rank._5)
 
-  private val chessBoardOnlyBishop = ChessBoard {
+  private val chessBoardOnlyBishop = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
@@ -25,8 +25,7 @@ class BishopRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesOnlyBishop = ChessBoard {
+  private val chessBoardMovesOnlyBishop = ChessBoard:
     * | X | * | * | * | * | * | X
     * | * | X | * | * | * | X | *
     * | * | * | X | * | X | * | *
@@ -35,14 +34,12 @@ class BishopRuleSpec extends AbstractChessRuleSpec:
     * | * | X | * | * | * | X | *
     * | X | * | * | * | * | * | X
     X | * | * | * | * | * | * | *
-  }
 
-  "The bishop rule" should "allow the bishop to move in all the diagonal directions" in {
+  "The bishop rule" should "allow the bishop to move in all the diagonal directions" in:
     val chessGameStatus = ChessGameStatus(chessBoardOnlyBishop)
     getChessBoardFromMoves(bishopPosition, chessGameStatus) shouldEqual chessBoardMovesOnlyBishop
-  }
 
-  private val chessBoardWithAllies = ChessBoard {
+  private val chessBoardWithAllies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | N | * | * | * | * | *
     * | * | * | * | * | R | * | *
@@ -51,8 +48,7 @@ class BishopRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | B
     K | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesWithAllies = ChessBoard {
+  private val chessBoardMovesWithAllies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | X | * | * | * | *
@@ -61,14 +57,12 @@ class BishopRuleSpec extends AbstractChessRuleSpec:
     * | * | X | * | * | * | X | *
     * | X | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
 
-  it should "avoid the movement over the allied pieces" in {
+  it should "avoid the movement over the allied pieces" in:
     val chessGameStatus = ChessGameStatus(chessBoardWithAllies)
     getChessBoardFromMoves(bishopPosition, chessGameStatus) shouldEqual chessBoardMovesWithAllies
-  }
 
-  private val chessBoardWithEnemies = ChessBoard {
+  private val chessBoardWithEnemies = ChessBoard:
     * | * | * | * | * | * | * | r
     * | * | p | * | * | * | * | *
     * | * | * | * | * | * | * | *
@@ -77,8 +71,7 @@ class BishopRuleSpec extends AbstractChessRuleSpec:
     * | * | K | * | * | * | n | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesWithEnemies = ChessBoard {
+  private val chessBoardMovesWithEnemies = ChessBoard:
     * | * | * | * | * | * | * | X
     * | * | X | * | * | * | X | *
     * | * | * | X | * | X | * | *
@@ -87,9 +80,7 @@ class BishopRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | X | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
 
-  it should "allow to capture enemy pieces" in {
+  it should "allow to capture enemy pieces" in:
     val chessGameStatus = ChessGameStatus(chessBoardWithEnemies)
     getChessBoardFromMoves(bishopPosition, chessGameStatus) shouldEqual chessBoardMovesWithEnemies
-  }

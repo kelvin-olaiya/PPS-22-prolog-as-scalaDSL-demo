@@ -47,13 +47,13 @@ object ChessGameAnalyzer:
    *         false otherwise.
    */
   def check(state: ChessGameStatus, teamPerspective: Team): Boolean =
-    state.chessBoard.pieces(teamPerspective.oppositeTeam).exists {
-      (opponentPosition, opponentPiece) =>
+    state.chessBoard
+      .pieces(teamPerspective.oppositeTeam)
+      .exists: (opponentPosition, opponentPiece) =>
         opponentPiece.rule
           .findMoves(opponentPosition, state)
           .flatMap { move => state.chessBoard.pieces(teamPerspective).get(move.to) }
           .exists { case _: King => true; case _ => false }
-    }
 
   /** As [[check check(state, state.currentTurn)]]. */
   def check(state: ChessGameStatus): Boolean = check(state, state.currentTurn)
@@ -83,9 +83,8 @@ object ChessGameAnalyzer:
     val enemyBaseRank = if state.currentTurn == WHITE then Rank._8 else Rank._1
     state.chessBoard
       .pieces(teamPerspective)
-      .collectFirst {
+      .collectFirst:
         case (position, piece: Pawn) if position.rank == enemyBaseRank => position
-      }
 
   /** As [[promotion promotion(state, state.currentTurn)]]. */
   def promotion(state: ChessGameStatus): Option[Position] = promotion(state, state.currentTurn)

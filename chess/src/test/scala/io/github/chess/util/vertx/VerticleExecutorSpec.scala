@@ -18,7 +18,7 @@ class VerticleExecutorSpec extends AbstractSpec:
   private val numberOfTasks: Long = 1000
   private val maxDuration: Duration = Duration(5, SECONDS)
 
-  "A verticle executor" should "execute all pending tasks in the same event-loop thread" in {
+  "A verticle executor" should "execute all pending tasks in the same event-loop thread" in:
     java.util.stream.Stream
       .iterate(0, _ + 1)
       .limit(numberOfTasks)
@@ -27,4 +27,3 @@ class VerticleExecutorSpec extends AbstractSpec:
       .map(Await.result(_, maxDuration))
       .distinct()
       .count() shouldBe 1
-  }

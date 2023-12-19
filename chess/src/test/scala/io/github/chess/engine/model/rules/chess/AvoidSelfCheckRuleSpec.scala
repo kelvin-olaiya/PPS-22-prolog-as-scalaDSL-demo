@@ -17,7 +17,7 @@ import io.github.chess.engine.model.rules.AbstractChessRuleSpec
 class AvoidSelfCheckRuleSpec extends AbstractChessRuleSpec:
 
   val pawnPosition: Position = (1, 6)
-  "The avoid self check mixin" should "forbid the pawn to make moves that would put or keep the current player in check" in {
+  "The avoid self check mixin" should "forbid the pawn to make moves that would put or keep the current player in check" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(
       ChessBoard {
         k | * | * | **
@@ -26,15 +26,13 @@ class AvoidSelfCheckRuleSpec extends AbstractChessRuleSpec:
       },
       initialTurn = Team.BLACK
     )
-    getChessBoardFromMoves(pawnPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(pawnPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | * | **
       * | * | * | **
       * | * | X | **
-    }
-  }
 
   val knightPosition: Position = (1, 6)
-  it should "forbid the knight to make moves that would put or keep the current player in check" in {
+  it should "forbid the knight to make moves that would put or keep the current player in check" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(
       ChessBoard {
         k | * | * | R | **
@@ -43,15 +41,13 @@ class AvoidSelfCheckRuleSpec extends AbstractChessRuleSpec:
       },
       initialTurn = Team.BLACK
     )
-    getChessBoardFromMoves(knightPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(knightPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | * | X | **
       * | * | * | * | **
       * | * | * | * | **
-    }
-  }
 
   val bishopPosition: Position = (1, 6)
-  it should "forbid the bishop to make moves that would put or keep the current player in check" in {
+  it should "forbid the bishop to make moves that would put or keep the current player in check" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(
       ChessBoard {
         k | * | * | R | **
@@ -60,15 +56,13 @@ class AvoidSelfCheckRuleSpec extends AbstractChessRuleSpec:
       },
       initialTurn = Team.BLACK
     )
-    getChessBoardFromMoves(bishopPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(bishopPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | X | * | **
       * | * | * | * | **
       * | * | * | * | **
-    }
-  }
 
   val rookPosition: Position = (1, 7)
-  it should "forbid the rook to make moves that would put or keep the current player in check" in {
+  it should "forbid the rook to make moves that would put or keep the current player in check" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(
       ChessBoard {
         k | r | * | R | **
@@ -77,15 +71,13 @@ class AvoidSelfCheckRuleSpec extends AbstractChessRuleSpec:
       },
       initialTurn = Team.BLACK
     )
-    getChessBoardFromMoves(rookPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(rookPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | X | X | **
       * | * | * | * | **
       * | * | * | * | **
-    }
-  }
 
   val queenPosition: Position = (1, 6)
-  it should "forbid the queen to make moves that would put or keep the current player in check" in {
+  it should "forbid the queen to make moves that would put or keep the current player in check" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(
       ChessBoard {
         k | * | * | * | **
@@ -95,16 +87,14 @@ class AvoidSelfCheckRuleSpec extends AbstractChessRuleSpec:
       },
       initialTurn = Team.BLACK
     )
-    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | * | * | **
       * | * | * | * | **
       * | * | X | * | **
       * | * | * | X | **
-    }
-  }
 
   val kingPosition: Position = (1, 6)
-  it should "forbid the king to make moves that would put or keep the current player in check" in {
+  it should "forbid the king to make moves that would put or keep the current player in check" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(
       ChessBoard {
         * | * | * | * | **
@@ -114,10 +104,8 @@ class AvoidSelfCheckRuleSpec extends AbstractChessRuleSpec:
       },
       initialTurn = Team.BLACK
     )
-    getChessBoardFromMoves(kingPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(kingPosition, chessGameStatus) shouldEqual ChessBoard:
       * | X | X | * | **
       * | * | * | * | **
       X | * | * | * | **
       * | * | * | * | **
-    }
-  }

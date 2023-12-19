@@ -77,16 +77,15 @@ class GameController(override protected val stage: Stage)(using
       context.chessEngineProxy.subscribe[CheckNotificationEvent](onCheckNotification),
       context.chessEngineProxy.subscribe[TurnChangedEvent](onTurnChanged)
     ).foreach { future =>
-      future.onComplete {
+      future.onComplete:
         case Success(subscriptionId) => this.subscriptions = this.subscriptions + subscriptionId
         case Failure(exception)      => throw exception
-      }
     }
 
   private def initView(): Unit =
-    context.chessEngineProxy.getState.onComplete {
+    context.chessEngineProxy.getState.onComplete:
       case Success(Running(status)) =>
-        Platform.runLater {
+        Platform.runLater:
           this.currentPlayerBelief = Some(status.gameConfiguration.player(status.currentTurn))
           chessBoardController.repaint(status.chessBoard.pieces)
           currentTurnText.setText(
@@ -94,10 +93,8 @@ class GameController(override protected val stage: Stage)(using
           )
           timeRemainingText.setText("-:-:-")
           lastMoveText.setText("N/A")
-        }
       case Failure(exception) => throw exception
       case _                  =>
-    }
 
   private def onPieceMoved(event: BoardChangedEvent): Unit =
     Platform.runLater(() =>
@@ -106,10 +103,9 @@ class GameController(override protected val stage: Stage)(using
     )
 
   private def onTurnChanged(event: TurnChangedEvent): Unit =
-    Platform.runLater {
+    Platform.runLater:
       this.currentPlayerBelief = Some(event.currentPlayer)
       currentTurnText.setText(s"${event.currentPlayer.name} -> ${event.currentPlayer.team}")
-    }
 
   private def onTimePassed(event: TimePassedEvent): Unit =
     Platform.runLater(() =>
@@ -118,7 +114,7 @@ class GameController(override protected val stage: Stage)(using
     )
 
   private def onGameOver(event: GameOverEvent): Unit =
-    Platform.runLater {
+    Platform.runLater:
       new Alert(AlertType.Information) {
         title = "Game Over!"
         headerText = event.cause.toString
@@ -129,10 +125,9 @@ class GameController(override protected val stage: Stage)(using
       }.showAndWait()
       this.context.chessEngineProxy.unsubscribe(this.subscriptions.toArray*)
       MainMenuPage(stage)
-    }
 
   private def onPromotingPawn(event: PromotingPawnEvent): Unit =
-    Platform.runLater {
+    Platform.runLater:
       val values = event.promotionPieces
       values.headOption match
         case Some(default) =>
@@ -142,19 +137,18 @@ class GameController(override protected val stage: Stage)(using
             case stage: javafx.stage.Stage => stage.setOnCloseRequest(_.consume())
             case _                         =>
           dialog.showAndWait().ifPresent { piece =>
-            context.chessEngineProxy.promote(event.pawnPosition, piece).onComplete {
-              case Success(p)         => this.chessBoardController.paint((event.pawnPosition, p))
-              case Failure(exception) => throw exception
-            }
+            context.chessEngineProxy
+              .promote(event.pawnPosition, piece)
+              .onComplete:
+                case Success(p)         => this.chessBoardController.paint((event.pawnPosition, p))
+                case Failure(exception) => throw exception
           }
         case None =>
-    }
 
   private def onCheckNotification(event: CheckNotificationEvent): Unit =
-    Platform.runLater {
+    Platform.runLater:
       new Alert(AlertType.Warning) {
         title = "Check!"
         headerText = "Check"
         contentText = s"${event.playerUnderCheck.name} is under Check."
       }.showAndWait()
-    }

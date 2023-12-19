@@ -53,8 +53,7 @@ object FXMLPage:
    * @return an url corresponding to the fxml resource identified by the specified path
    */
   private def fxmlURLfromPath(localPath: String): URL =
-    Option(this.getClass.getResource(s"/$localPath.fxml")).getOrThrow {
+    Option(this.getClass.getResource(s"/$localPath.fxml")).getOrThrow:
       IllegalArgumentException(
         "Could not load the specified resource. Try with a different path."
       )
-    }
