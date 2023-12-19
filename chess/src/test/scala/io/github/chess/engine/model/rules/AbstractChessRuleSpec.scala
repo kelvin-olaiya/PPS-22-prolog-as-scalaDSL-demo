@@ -28,10 +28,9 @@ abstract class AbstractChessRuleSpec extends AbstractSpec:
       marker: Piece = Piece()
   ): ChessBoard =
     status.chessBoard.pieces.get(position).map { piece =>
-      ChessBoard.fromMap {
+      ChessBoard.fromMap:
         piece.rule
           .findMoves(position, status)
           .map { _.to -> marker }
           .toMap[Position, Piece]
-      }
     } getOrElse ChessBoard.empty

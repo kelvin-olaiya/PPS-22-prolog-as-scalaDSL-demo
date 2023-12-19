@@ -11,10 +11,8 @@ import io.github.kelvindev15.prolog.PrologProgram
 
 /** Represents the prolog rule to find all the coordinates in the south west direction from a starting position. */
 class SWPrologRule extends PrologRule("sw_move") with InsideBoardRule():
-  private val Xs, Ys, N1 = Seq("Xs", "Ys", "N1").map(varOf)
-  override protected val prologTheory: PrologProgram = prolog {
+  override protected val prologTheory: PrologProgram = prolog:
     programTheory:
       rule { theoryGoal(Xs, Ys, X, Y) :- theoryGoal(Xs, Ys, 1, X, Y) }
-      rule { theoryGoal(Xs, Ys, N, X, Y) :- &&(X is Xs - N, Y is Ys - N) }
-      rule { theoryGoal(Xs, Ys, N, X, Y) :- &&(N1 is N + 1, theoryGoal(Xs, Ys, N1, X, Y)) }
-  }
+      rule { theoryGoal(Xs, Ys, N, X, Y) :- &&(X is (Xs - N), Y is (Ys - N)) }
+      rule { theoryGoal(Xs, Ys, N, X, Y) :- &&(N1 is (N + 1), theoryGoal(Xs, Ys, N1, X, Y)) }

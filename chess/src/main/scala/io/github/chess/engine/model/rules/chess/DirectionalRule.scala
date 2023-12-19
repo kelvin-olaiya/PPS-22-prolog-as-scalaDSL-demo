@@ -40,10 +40,9 @@ trait DirectionalRule extends ChessRule with RuleShorthands:
       status: ChessGameStatus,
       direction: Direction
   ): Set[Move] =
-    within(status) {
+    within(status):
       val (availablePositions, obstructedPositions) = direction(startingPosition).span(!occupied(_))
       (availablePositions ++ obstructedPositions.take(1)).map(Move(startingPosition, _)).toSet
-    }
 
 /** Companion object of [[DirectionalRule]]. */
 object DirectionalRule:

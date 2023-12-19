@@ -16,7 +16,7 @@ import io.github.chess.engine.model.rules.AbstractChessRuleSpec
 class QueenRuleSpec extends AbstractChessRuleSpec:
   val queenPosition: Position = Position(File.E, Rank._5)
 
-  "The queen" should "move in all possible directions" in {
+  "The queen" should "move in all possible directions" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(ChessBoard {
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
@@ -27,7 +27,7 @@ class QueenRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
     })
-    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard:
       * | X | * | * | X | * | * | X
       * | * | X | * | X | * | X | *
       * | * | * | X | X | X | * | *
@@ -36,10 +36,8 @@ class QueenRuleSpec extends AbstractChessRuleSpec:
       * | * | X | * | X | * | X | *
       * | X | * | * | X | * | * | X
       X | * | * | * | X | * | * | *
-    }
-  }
 
-  it should "be blocked by pieces of the same team" in {
+  it should "be blocked by pieces of the same team" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(ChessBoard {
       * | * | * | * | * | * | * | *
       * | * | N | * | * | * | * | *
@@ -50,7 +48,7 @@ class QueenRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | R | * | * | *
       * | * | * | * | * | * | * | *
     })
-    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | * | * | X | * | * | *
       * | * | * | * | X | * | * | *
       * | * | * | X | X | * | * | *
@@ -59,10 +57,8 @@ class QueenRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | X | * | X | *
       * | * | * | * | * | * | * | X
       * | * | * | * | * | * | * | *
-    }
-  }
 
-  it should "be able to capture pieces of the opposite team" in {
+  it should "be able to capture pieces of the opposite team" in:
     val chessGameStatus: ChessGameStatus = ChessGameStatus(ChessBoard {
       * | p | * | * | * | * | * | *
       * | * | p | * | p | * | * | *
@@ -73,7 +69,7 @@ class QueenRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | * | * | * | *
       * | * | * | * | p | * | * | *
     })
-    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard {
+    getChessBoardFromMoves(queenPosition, chessGameStatus) shouldEqual ChessBoard:
       * | * | * | * | * | * | * | X
       * | * | X | * | X | * | X | *
       * | * | * | X | X | X | * | *
@@ -82,5 +78,3 @@ class QueenRuleSpec extends AbstractChessRuleSpec:
       * | * | * | * | X | * | X | *
       * | * | * | * | X | * | * | X
       * | * | * | * | X | * | * | *
-    }
-  }

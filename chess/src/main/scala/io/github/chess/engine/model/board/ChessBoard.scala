@@ -57,10 +57,9 @@ trait ChessBoard:
    * }}}
    */
   def update(updates: (Position, Option[Piece])*): ChessBoard =
-    updates.foldLeft(this) {
+    updates.foldLeft(this):
       case (chessBoard, (position, Some(piece))) => chessBoard.setPiece(position, piece)
       case (chessBoard, (position, _))           => chessBoard.removePiece(position)
-    }
 
   /**
    * Moves a piece if present in from position to a target position.
@@ -105,7 +104,7 @@ object ChessBoard:
   def empty: ChessBoard = BasicChessBoard()
 
   /** @return a chess board initialized for a standard game of chess. */
-  def standard: ChessBoard = ChessBoard {
+  def standard: ChessBoard = ChessBoard:
     r | n | b | q | k | b | n | r
     p | p | p | p | p | p | p | p
     * | * | * | * | * | * | * | *
@@ -114,7 +113,6 @@ object ChessBoard:
     * | * | * | * | * | * | * | *
     P | P | P | P | P | P | P | P
     R | N | B | Q | K | B | N | R
-  }
 
   /**
    * @param pieces a map from positions to pieces in the chess board

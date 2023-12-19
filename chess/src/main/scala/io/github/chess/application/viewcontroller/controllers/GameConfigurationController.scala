@@ -72,10 +72,9 @@ class GameConfigurationController(override protected val stage: Stage)(using
       this.mainPane.setDisable(true)
       context.chessEngineProxy
         .startGame(createGameConfiguration())
-        .onComplete {
+        .onComplete:
           case Success(_)         => Platform.runLater { GamePage(stage) }
           case Failure(exception) => throw exception
-        }
 
   private def generateMinutesRangeFromTimeConstraint(timeConstraint: TimeConstraint) =
     val (min, max, default) = timeConstraint match

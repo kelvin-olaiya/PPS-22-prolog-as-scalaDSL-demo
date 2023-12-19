@@ -1,5 +1,5 @@
 [versions]
-scala-version = "3.2.2"
+scala-version = "3.3.1"
 scalatest-version = "3.2.15"
 scalatestplus-version = "3.2.15.0"
 spotless-version = "6.15.0"
@@ -22,10 +22,13 @@ scalafmt-config = { module = "org.scalameta:scalafmt-config_2.13", version.ref =
 wartremover = { module = "org.wartremover:wartremover_3.2.2", version.ref = "wartremover-version" }
 vertx = { module = "io.vertx:vertx-core", version.ref = "vertx-version" }
 scalafx = { module = "org.scalafx:scalafx_3", version.ref = "scalafx-version" }
+javafx-main = { module = "org.openjfx:javafx", version.ref = "javafx-version" }
+javafx-web = { module = "org.openjfx:javafx-web", version.ref = "javafx-version" }
 javafx-base = { module = "org.openjfx:javafx-base", version.ref = "javafx-version" }
 javafx-controls = { module = "org.openjfx:javafx-controls", version.ref = "javafx-version" }
 javafx-fxml = { module = "org.openjfx:javafx-fxml", version.ref = "javafx-version" }
 javafx-graphics = { module = "org.openjfx:javafx-graphics", version.ref = "javafx-version" }
+javafx-swing = { module = "org.openjfx:javafx-swing", version.ref = "javafx-version" }
 javafx-media = { module = "org.openjfx:javafx-media", version.ref = "javafx-version" }
 tuprolog = { module = "it.unibo.alice.tuprolog:2p-core", version.ref = "tuprolog-version" }
 awaitility = { module = "org.awaitility:awaitility-scala", version.ref = "awaitility-version" }
@@ -33,7 +36,7 @@ awaitility = { module = "org.awaitility:awaitility-scala", version.ref = "awaiti
 
 [bundles]
 scalafmt = [ "scalafmt-cli", "scalafmt-config" ]
-javafx = [ "javafx-base", "javafx-controls", "javafx-fxml", "javafx-graphics", "javafx-media" ]
+javafx = [ "javafx-base", "javafx-controls", "javafx-fxml", "javafx-graphics", "javafx-media", "javafx-web", "javafx-swing" ]
 # insert groups of dependencies here...
 
 [plugins]

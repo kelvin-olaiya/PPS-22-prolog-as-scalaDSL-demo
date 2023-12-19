@@ -13,14 +13,12 @@ import io.github.chess.engine.model.pieces.Pawn
 class AvoidAllPiecesSpec extends AbstractPawnSpec:
 
   "AvoidAllPieces filtering" should "make the base move of the white pawn unavailable, " +
-    "if there is any piece on the following cell" in {
-      checkIfAvoidsBothPieces(whitePawn)
-    }
+    "if there is any piece on the following cell" in:
+    checkIfAvoidsBothPieces(whitePawn)
 
   it should "make the base move of the black pawn unavailable, " +
-    "if there is any piece on the following cell" in {
-      checkIfAvoidsBothPieces(blackPawn)
-    }
+    "if there is any piece on the following cell" in:
+    checkIfAvoidsBothPieces(blackPawn)
 
   private def checkIfAvoidsBothPieces(pawnToCheck: Pawn): Unit =
     val pawnInitialPosition: Position = pawnToCheck.team match

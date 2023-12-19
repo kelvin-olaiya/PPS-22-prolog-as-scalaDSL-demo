@@ -18,12 +18,10 @@ class MoveSpec extends AbstractSpec:
   private val toPosition: Position = Position(File.B, Rank._2)
   private val move: Move = Move(fromPosition, toPosition)
 
-  "A Move" should "be equal to the same object with same parameters" in {
+  "A Move" should "be equal to the same object with same parameters" in:
     val sameMove = model.moves.Move(fromPosition, toPosition)
     move shouldEqual sameMove
-  }
 
-  it should "have the same from Position and to Position initialized with" in {
+  it should "have the same from Position and to Position initialized with" in:
     move.from shouldEqual fromPosition
     move.to shouldEqual toPosition
-  }

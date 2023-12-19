@@ -9,8 +9,6 @@ import io.github.kelvindev15.prolog.PrologProgram
 
 /** Class representing the prolog rule that finds all moves in the South direction. */
 class SPrologRule extends PrologRule("s_move") with InsideBoardRule():
-  val X1, X2, Y1, Y2 = Seq("X1", "X2", "Y1", "Y2").map(varOf)
-  override protected val prologTheory: PrologProgram = prolog {
+  override protected val prologTheory: PrologProgram = prolog:
     programTheory:
-      rule { theoryGoal(X1, Y1, X1, Y2) :- ||(Y2 is Y1 - 1, theoryGoal(X1, Y1 - 1, X1, Y2)) }
-  }
+      rule { theoryGoal(X1, Y1, X1, Y2) :- ||(Y2 is (Y1 - 1), theoryGoal(X1, Y1 - 1, X1, Y2)) }

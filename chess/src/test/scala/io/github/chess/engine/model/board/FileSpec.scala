@@ -21,7 +21,7 @@ class FileSpec extends AbstractSpec:
   private val g: File = File.G
   private val h: File = File.H
 
-  "A file" should "follow the Universal Chess Interface protocol representation" in {
+  "A file" should "follow the Universal Chess Interface protocol representation" in:
     "a" shouldEqual a.toString
     "b" shouldEqual b.toString
     "c" shouldEqual c.toString
@@ -30,9 +30,8 @@ class FileSpec extends AbstractSpec:
     "f" shouldEqual f.toString
     "g" shouldEqual g.toString
     "h" shouldEqual h.toString
-  }
 
-  it should "correctly forwarded" in {
+  it should "correctly forwarded" in:
     b shouldEqual a.forward()
     c shouldEqual b.forward()
     d shouldEqual c.forward()
@@ -41,9 +40,8 @@ class FileSpec extends AbstractSpec:
     g shouldEqual f.forward()
     h shouldEqual g.forward()
     an[OutsideBoardException] should be thrownBy h.forward()
-  }
 
-  it should "correctly backwarded" in {
+  it should "correctly backwarded" in:
     an[OutsideBoardException] should be thrownBy a.backward()
     a shouldEqual b.backward()
     b shouldEqual c.backward()
@@ -52,4 +50,3 @@ class FileSpec extends AbstractSpec:
     e shouldEqual f.backward()
     f shouldEqual g.backward()
     g shouldEqual h.backward()
-  }

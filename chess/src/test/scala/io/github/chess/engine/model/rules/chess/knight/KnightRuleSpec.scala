@@ -16,7 +16,7 @@ class KnightRuleSpec extends AbstractChessRuleSpec:
 
   private val knightPosition = Position(File.E, Rank._5)
 
-  private val chessBoardOnlyKnight = ChessBoard {
+  private val chessBoardOnlyKnight = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
@@ -25,8 +25,7 @@ class KnightRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesOnlyKnight = ChessBoard {
+  private val chessBoardMovesOnlyKnight = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | X | * | X | * | *
     * | * | X | * | * | * | X | *
@@ -35,14 +34,12 @@ class KnightRuleSpec extends AbstractChessRuleSpec:
     * | * | * | X | * | X | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
 
-  "The knight rule" should "allow the knight to move in all the exact positions following the rule" in {
+  "The knight rule" should "allow the knight to move in all the exact positions following the rule" in:
     val chessGameStatus = ChessGameStatus(chessBoardOnlyKnight)
     getChessBoardFromMoves(knightPosition, chessGameStatus) shouldEqual chessBoardMovesOnlyKnight
-  }
 
-  private val chessBoardWithAllies = ChessBoard {
+  private val chessBoardWithAllies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | B | * | *
     * | * | R | * | * | * | * | *
@@ -51,8 +48,7 @@ class KnightRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | Q | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesWithAllies = ChessBoard {
+  private val chessBoardMovesWithAllies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | X | * | * | * | *
     * | * | * | * | * | * | X | *
@@ -61,14 +57,12 @@ class KnightRuleSpec extends AbstractChessRuleSpec:
     * | * | * | X | * | * | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
 
-  it should "avoid the movement over the allied pieces" in {
+  it should "avoid the movement over the allied pieces" in:
     val chessGameStatus = ChessGameStatus(chessBoardWithAllies)
     getChessBoardFromMoves(knightPosition, chessGameStatus) shouldEqual chessBoardMovesWithAllies
-  }
 
-  private val chessBoardWithEnemies = ChessBoard {
+  private val chessBoardWithEnemies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | * | * | B | * | *
     * | * | r | * | * | * | * | *
@@ -77,8 +71,7 @@ class KnightRuleSpec extends AbstractChessRuleSpec:
     * | * | * | * | * | q | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
-  private val chessBoardMovesWithEnemies = ChessBoard {
+  private val chessBoardMovesWithEnemies = ChessBoard:
     * | * | * | * | * | * | * | *
     * | * | * | X | * | * | * | *
     * | * | X | * | * | * | X | *
@@ -87,9 +80,7 @@ class KnightRuleSpec extends AbstractChessRuleSpec:
     * | * | * | X | * | X | * | *
     * | * | * | * | * | * | * | *
     * | * | * | * | * | * | * | *
-  }
 
-  it should "allow to capture enemy pieces" in {
+  it should "allow to capture enemy pieces" in:
     val chessGameStatus = ChessGameStatus(chessBoardWithEnemies)
     getChessBoardFromMoves(knightPosition, chessGameStatus) shouldEqual chessBoardMovesWithEnemies
-  }

@@ -11,7 +11,7 @@ import io.github.chess.engine.model.board.Position
 /** Test suit for the rule that finds the move makes the [[io.github.chess.model.pieces.Pawn]] advance by one step. */
 class SingleStepRuleSpec extends AbstractPawnSpec:
 
-  "Single Step Rule" should "always have the next position in north direction as possible move for any white pawn" in {
+  "Single Step Rule" should "always have the next position in north direction as possible move for any white pawn" in:
     pawnPositions.foreach(pos => {
       addPiece(pos, whitePawn)
       val nextPosition = pos.rankUp()
@@ -20,9 +20,8 @@ class SingleStepRuleSpec extends AbstractPawnSpec:
         nextPosition
       )
     })
-  }
 
-  it should "always have the next position in south direction as possible move for any black pawn" in {
+  it should "always have the next position in south direction as possible move for any black pawn" in:
     pawnPositions.foreach(pos => {
       addPiece(pos, blackPawn)
       val nextPosition = pos.rankDown()
@@ -31,9 +30,8 @@ class SingleStepRuleSpec extends AbstractPawnSpec:
         nextPosition
       )
     })
-  }
 
-  it should "give an empty set if called on a pawn positioned on the adversary border" in {
+  it should "give an empty set if called on a pawn positioned on the adversary border" in:
     val whitePawnPosition: Position = (4, 7)
     addPiece(whitePawnPosition, whitePawn)
     SingleStepRule().findMoves(whitePawnPosition, status) should be(empty)
@@ -41,4 +39,3 @@ class SingleStepRuleSpec extends AbstractPawnSpec:
     val blackPawnPosition: Position = (4, 0)
     addPiece(blackPawnPosition, blackPawn)
     SingleStepRule().findMoves(blackPawnPosition, status) should be(empty)
-  }

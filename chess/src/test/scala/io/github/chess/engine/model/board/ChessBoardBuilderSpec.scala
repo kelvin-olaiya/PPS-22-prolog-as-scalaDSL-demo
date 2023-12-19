@@ -17,11 +17,10 @@ import java.lang.IllegalStateException
 /** Test suit for the [[ChessBoardBuilder]]. */
 class ChessBoardBuilderSpec extends AbstractSpec:
 
-  "A chess board builder" should "produce an empty chess board if not configured" in {
+  "A chess board builder" should "produce an empty chess board if not configured" in:
     ChessBoardBuilder().build shouldEqual ChessBoard.empty
-  }
 
-  it should "produce the specified chess board if configured" in {
+  it should "produce the specified chess board if configured" in:
     val chessBoardBuilder =
       ChessBoardBuilder()
         .setNextCell(whitePawn)
@@ -32,7 +31,7 @@ class ChessBoardBuilderSpec extends AbstractSpec:
         .setNextCell(None)
         .setNextCell(None)
         .setNextCell(blackPawn)
-    chessBoardBuilder.build shouldEqual ChessBoard {
+    chessBoardBuilder.build shouldEqual ChessBoard:
       P | P | * | p | * | * | * | *
       * | * | p | * | * | * | * | *
       * | * | * | * | * | * | * | *
@@ -41,10 +40,8 @@ class ChessBoardBuilderSpec extends AbstractSpec:
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
       * | * | * | * | * | * | * | *
-    }
-  }
 
-  it should "provide a lighter configuration syntax" in {
+  it should "provide a lighter configuration syntax" in:
     val chessBoardBuilder =
       ChessBoardBuilder()
         .nextRow()
@@ -63,12 +60,10 @@ class ChessBoardBuilderSpec extends AbstractSpec:
         - 2
         + whitePawn
     chessBoardBuilder.build shouldEqual otherChessBoardBuilder.build
-  }
 
-  it should s"throw an illegal state exception when trying to fill more than ${ChessBoard.NumberOfPositions} cells" in {
+  it should s"throw an illegal state exception when trying to fill more than ${ChessBoard.NumberOfPositions} cells" in:
     val chessBoardBuilder = ChessBoardBuilder().nextRow(8)
     an[IllegalStateException] should be thrownBy { chessBoardBuilder.setNextCell(whitePawn) }
-  }
 
   /** @return a new white pawn */
   private def whitePawn: Piece = Pawn(Team.WHITE)

@@ -13,13 +13,11 @@ import io.github.chess.engine.model.pieces.Pawn
 /** Test suit for the rule that finds the possible capture moves of a [[io.github.chess.model.pieces.Pawn]]. */
 class PawnCaptureMovesSpec extends AbstractPawnSpec:
 
-  "PawnCaptureMoves rule" should "always find at least one move for white pawns" in {
+  "PawnCaptureMoves rule" should "always find at least one move for white pawns" in:
     testAllPositionsCaptureFor(whitePawn)
-  }
 
-  it should "always find at least one move for black pawns" in {
+  it should "always find at least one move for black pawns" in:
     testAllPositionsCaptureFor(blackPawn)
-  }
 
   private def testAllPositionsCaptureFor(pawn: Pawn): Unit =
     pawnPositions.foreach(pawnPosition => {

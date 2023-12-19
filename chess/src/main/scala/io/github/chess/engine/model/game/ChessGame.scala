@@ -55,8 +55,8 @@ class ChessGame(private val vertx: Vertx) extends ChessPort:
     runOnVerticle("State retrieval") { this.state }
 
   override def startGame(gameConfiguration: GameConfiguration): Future[Unit] =
-    runOnVerticle("Game initialization") {
-      onlyIfNotConfigured {
+    runOnVerticle("Game initialization"):
+      onlyIfNotConfigured:
         val status = ChessGameStatus(gameConfiguration = gameConfiguration)
         this.state = Running(status)
         // Initialize all the Prolog Rule(s)
@@ -66,24 +66,21 @@ class ChessGame(private val vertx: Vertx) extends ChessPort:
           this.publishTimePassedEvent(),
           this.publishTimeOutGameOverEvent()
         )
-      }
-    }
 
   override def findMoves(position: Position): Future[Set[Move]] =
-    runOnVerticle("Find move") {
+    runOnVerticle("Find move"):
       onlyIfRunning { status =>
         status.chessBoard.pieces(status.currentTurn).get(position) match
           case Some(piece) => piece.rule.findMoves(position, status)
           case None        => Set.empty
       }
-    }
 
   override def applyMove(move: Move): Future[Unit] =
-    runOnVerticle("Move execution") {
+    runOnVerticle("Move execution"):
       onlyIfRunning { currentStatus =>
         // Update the state of the game by applying the specified move
         var status = currentStatus
-        status = status.updateChessBoard {
+        status = status.updateChessBoard:
           val chessBoard = status.chessBoard.movePiece(move.from, move.to)
           move match
             case castlingMove: CastlingMove =>
@@ -91,12 +88,10 @@ class ChessGame(private val vertx: Vertx) extends ChessPort:
             case enPassantMove: EnPassantMove =>
               chessBoard.removePiece(enPassantMove.capturedPiecePosition)
             case _ => chessBoard
-        }
-        status = status.updateHistory {
+        status = status.updateHistory:
           status.chessBoard.pieces.get(move.to) match
             case Some(piece) => status.history.save(piece, move)
             case None        => status.history
-        }
         this.state = Running(status)
         publishBoardChangedEvent()
 
@@ -108,13 +103,12 @@ class ChessGame(private val vertx: Vertx) extends ChessPort:
             this.publishPromotingPawnEvent(promotingPawnPosition)
           case _ => switchTurn()
       }
-    }
 
   override def promote[P <: Piece](
       pawnPosition: Position,
       promotingPiece: PromotionPiece[P]
   ): Future[P] =
-    runOnVerticle("Pawn promotion") {
+    runOnVerticle("Pawn promotion"):
       onlyIfAwaitingPromotion { status =>
         val newPiece =
           promotingPiece.pieceClass.getConstructor(classOf[Team]).newInstance(status.currentTurn)
@@ -127,10 +121,9 @@ class ChessGame(private val vertx: Vertx) extends ChessPort:
         switchTurn()
         newPiece
       }
-    }
 
   override def surrender(p: Player): Future[Unit] =
-    runOnVerticle("Player surrender") {
+    runOnVerticle("Player surrender"):
       onlyIfRunning { status =>
         this.publish(
           GameOverEvent(
@@ -139,21 +132,19 @@ class ChessGame(private val vertx: Vertx) extends ChessPort:
           )
         )
       }
-    }
 
   /** Change the current player in this chess game. */
   private def switchTurn(): Unit =
-    logActivity("Switching turn") {
+    logActivity("Switching turn"):
       onlyIfRunning { status =>
         this.timerManager.restart(status.currentTurn)
         this.state = Running(status.changeTurn())
         publishTurnChangedEvent()
       }
-    }
 
   /** Analyzes the board searching for end game situations. */
   private def analyzeBoard(): Unit =
-    logActivity("Board analysis") {
+    logActivity("Board analysis"):
       onlyIfRunning { status =>
         ChessGameAnalyzer.situationOf(status) match
           case Some(CheckMate) =>
@@ -171,37 +162,33 @@ class ChessGame(private val vertx: Vertx) extends ChessPort:
             )
           case _ =>
       }
-    }
 
   /** Resets the game to its initial state. */
   private def resetGame(): Unit =
-    logActivity("Game reset") {
+    logActivity("Game reset"):
       onlyIfRunning { status =>
         this.timerManager.stop(status.currentTurn)
         this.state = ChessGameState.NotConfigured()
       }
-    }
 
   override def subscribe[T <: Event: ClassTag](handler: T => Unit): Future[String] =
     val subscriptionId: String = Id()
-    runOnVerticle(s"Subscription to ${addressOf[T]} {#$subscriptionId}") {
+    runOnVerticle(s"Subscription to ${addressOf[T]} {#$subscriptionId}"):
       this.subscriptions +=
         subscriptionId ->
           this.vertx
             .eventBus()
             .consumer[T](addressOf[T], message => handler(message.body))
       subscriptionId
-    }
 
   override def unsubscribe(subscriptionIds: String*): Future[Unit] =
-    runOnVerticle(s"Cancelling subscriptions {#${subscriptionIds.mkString(",#")}}") {
+    runOnVerticle(s"Cancelling subscriptions {#${subscriptionIds.mkString(",#")}}"):
       subscriptionIds.foreach { subscriptionId =>
         this.subscriptions.get(subscriptionId).foreach { consumer =>
           consumer.unregister()
           this.subscriptions -= subscriptionId
         }
       }
-    }
 
   /**
    * Publish the specified event notifying all subscribers.
@@ -209,9 +196,8 @@ class ChessGame(private val vertx: Vertx) extends ChessPort:
    * @tparam T the type of the specified event
    */
   private def publish[T <: Event: ClassTag](event: T): Unit =
-    logActivity(s"Publication to ${addressOf[T]}") {
+    logActivity(s"Publication to ${addressOf[T]}"):
       this.vertx.eventBus().publish(addressOf[T], event)
-    }
 
   private def publishBoardChangedEvent(): Unit =
     onlyIfConfigured { status =>

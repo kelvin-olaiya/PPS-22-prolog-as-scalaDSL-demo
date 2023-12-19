@@ -15,11 +15,10 @@ import io.github.chess.engine.model.game.{ChessGameAnalyzer, ChessGameStatus}
 /** Test suit for the [[ChessGameAnalyzer]]. */
 class ChessGameAnalyzerSpec extends AbstractSpec:
 
-  "A chess board analyzer" should "verify that in the standard configuration of a chess board there is no particular situation" in {
+  "A chess board analyzer" should "verify that in the standard configuration of a chess board there is no particular situation" in:
     ChessGameAnalyzer.situationOf(ChessGameStatus()) shouldNot be(defined)
-  }
 
-  it should "be able to recognize a check" in {
+  it should "be able to recognize a check" in:
     ChessGameAnalyzer.situationOf(
       ChessGameStatus(
         ChessBoard {
@@ -30,9 +29,8 @@ class ChessGameAnalyzerSpec extends AbstractSpec:
       ),
       teamPerspective = Team.WHITE
     ) shouldEqual Some(Check)
-  }
 
-  it should "be able to recognize a stale" in {
+  it should "be able to recognize a stale" in:
     ChessGameAnalyzer.situationOf(
       ChessGameStatus(
         ChessBoard {
@@ -42,9 +40,8 @@ class ChessGameAnalyzerSpec extends AbstractSpec:
       ),
       teamPerspective = Team.WHITE
     ) shouldEqual Some(Stale)
-  }
 
-  it should "be able to recognize a checkmate" in {
+  it should "be able to recognize a checkmate" in:
     ChessGameAnalyzer.situationOf(
       ChessGameStatus(
         ChessBoard {
@@ -54,9 +51,8 @@ class ChessGameAnalyzerSpec extends AbstractSpec:
       ),
       teamPerspective = Team.WHITE
     ) shouldEqual Some(CheckMate)
-  }
 
-  it should "be able to recognize a promotion" in {
+  it should "be able to recognize a promotion" in:
     ChessGameAnalyzer.situationOf(
       ChessGameStatus(
         ChessBoard {
@@ -65,4 +61,3 @@ class ChessGameAnalyzerSpec extends AbstractSpec:
       ),
       teamPerspective = Team.WHITE
     ) shouldEqual Some(Promotion(Position(File.A, Rank._8)))
-  }

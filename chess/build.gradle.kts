@@ -21,6 +21,7 @@ dependencies {
     compileOnly(libs.bundles.scalafmt)
     implementation(libs.vertx)
     implementation(libs.scalafx)
+    implementation(libs.javafx.main)
     libs.bundles.javafx.get().forEach {
         val fxArtifact = "${it.module}:${it.version}"
         compileOnly("$fxArtifact:${JavaFX.getSpecificClassifier()}")

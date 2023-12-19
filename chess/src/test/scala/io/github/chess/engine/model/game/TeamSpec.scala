@@ -15,10 +15,8 @@ class TeamSpec extends AbstractSpec:
   private val WhiteTeam = Team.WHITE
   private val BlackTeam = Team.BLACK
 
-  "The opposite of the White Team" should "be the Black Team" in {
+  "The opposite of the White Team" should "be the Black Team" in:
     WhiteTeam.oppositeTeam shouldEqual BlackTeam
-  }
 
-  "The opposite of the Black Team" should "be the White Team" in {
+  "The opposite of the Black Team" should "be the White Team" in:
     BlackTeam.oppositeTeam shouldEqual WhiteTeam
-  }
